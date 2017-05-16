@@ -21,7 +21,7 @@
          </router-link>
         </li>
        <li>
-         <router-link class="link" to="/Community">
+         <router-link class="link" to="/Bought">
             <img src="../assets/buied.png" alt="">
             已购图书
          </router-link>

@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import Index from '@/components/Index'
 import Cart from '@/components/Cart'
 import Near from '@/components/Near'
+import Bought from '@/components/Bought'
+
 Vue.use(Router)
 
 export default new Router({
@@ -21,6 +23,11 @@ export default new Router({
       path: '/Near',
       name: 'Near',
       component: Near
+    },
+    {
+      path: '/Bought',
+      name: 'Bought',
+      component: Bought
     }
   ]
 })
