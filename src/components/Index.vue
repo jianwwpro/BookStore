@@ -4,10 +4,8 @@
         <router-link to="/" slot="left">
           <mt-button icon="back"></mt-button>
         </router-link>
-        <router-link to="/Cart" slot="right">
-          <img class="buycar" src="../assets/buycar.png" alt="">
+        <router-link class="buycar" to="/Cart" slot="right">
         </router-link>
-       
       </mt-header>
      <ul>
        <li>
@@ -72,10 +70,6 @@ export default {
 <style scoped lang='stylus'>
 .index
   width 100%
-  .mint-header-button > a 
-    height 100%
-    display inline-block
-    line-height 0em
   .text_content
     width 92%
     border none
@@ -112,5 +106,9 @@ export default {
      background: -o-linear-gradient(right,#00774e 0,#00d994 100%);
      background: linear-gradient(to right,#00774e 0,#00d994 100%);
     .buycar
-      width 2em
+      background url(../assets/buycar.png) no-repeat 
+      background-size 20px 20px
+      background-position 66px 5px
+      height 2em
+      display block
 </style>
