@@ -72,6 +72,10 @@ export default {
 <style scoped lang='stylus'>
 .index
   width 100%
+  .mint-header-button > a 
+    height 100%
+    display inline-block
+    line-height 4em
   .text_content
     width 92%
     border none
