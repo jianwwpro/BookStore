@@ -5,7 +5,7 @@
           <mt-button icon="back"></mt-button>
         </router-link>
         <router-link to="/Cart" slot="right">
-          <mt-button ><img class="buycar" src="../assets/buycar.png" alt=""></mt-button>
+          <img class="buycar" src="../assets/buycar.png" alt="">
         </router-link>
        
       </mt-header>
