@@ -75,7 +75,7 @@ export default {
   .mint-header-button > a 
     height 100%
     display inline-block
-    line-height 4em
+    line-height 0em
   .text_content
     width 92%
     border none
