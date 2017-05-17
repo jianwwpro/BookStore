@@ -108,8 +108,8 @@ export default {
     .buycar
       background url(../assets/buycar.png) no-repeat 
       background-size 1.5em
-      background-position 0.5em 0.2em
-      height 2em
+      background-position 0.5em 0.8em
+      height 3em
       display block
       float right
       width 2em
