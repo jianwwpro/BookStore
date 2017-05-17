@@ -9,10 +9,10 @@
       </mt-header>
      <ul>
        <li>
-         <router-link class="link" to="/Community">
+         <a class="link" @click='openBarcode'>
             <img src="../assets/QRcode.png" alt="">
             扫码购书
-         </router-link>
+         </a>
        </li>
        <li>
           <router-link class="link" to="/Near">
@@ -40,14 +40,23 @@
 </template>
 
 <script>
-import { Header } from 'mint-ui' 
+import { Header,Indicator,Toast } from 'mint-ui' 
+import wx from 'weixin-js-sdk'
+import { mapGetters } from 'vuex'
 export default {
   name: 'index',
+
   mounted(){
+   
+    
   },
   data () {
     return {
-      msg: '彩云书店'
+      msg: '彩云书店',
+      appId:'',
+      timestamp:'',
+      nonceStr:'',
+      signature:''
     }
   },
   route: {
@@ -61,6 +70,49 @@ export default {
   },
   methods: {
     
+    open(){
+      wx.error(er=>{
+        Toast(er);
+      });
+      wx.ready(()=>{
+        wx.scanQRCode({
+            needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+            scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+            success: res=>{
+              var msg = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+              Toast(msg);
+            }
+          })  
+      });
+    },
+    openBarcode(){
+      this.$store.dispatch('save')
+      this.open()
+      // if(this.appId==''){
+      //   Indicator.open('开启中...');
+      //   this.$http.jsonp("http://i.brainhunt.cn/caiyunboss-interface/js/config?url="+location.href.split('#')[0]).then(res=>{
+      //     let data = res.data;
+      //     var appId = data.appId;
+      //     var timestamp = data.timestamp;
+      //     var nonceStr = data.noncestr;
+      //     var signature = data.signature;
+      //     this.appId=appId
+      //     this.timestamp=timestamp
+      //     this.nonceStr=nonceStr
+      //     this.signature=signature
+      //     console.log(this.appId)
+          
+      //     this.wxConfig()
+      //     this.open()
+      //     Indicator.close();
+      //   });
+      // }else {
+        
+      //   this.open()
+        
+      // }
+
+    }
   }
 
 }

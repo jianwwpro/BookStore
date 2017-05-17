@@ -7,12 +7,16 @@ import VueResource from 'vue-resource'
 import 'mint-ui/lib/style.css'
 import MintUI from 'mint-ui'
 
+import store from './store'
+
 Vue.config.productionTip = false
 Vue.use(MintUI)
+Vue.use(VueResource)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })

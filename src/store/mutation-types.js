@@ -1,0 +1,2 @@
+export const WX_CONFIG_CLEAR = 'WXCONFIGCLEAR'
+export const WX_CONFIG_SAVE = 'WXCONFIGSAVE'
