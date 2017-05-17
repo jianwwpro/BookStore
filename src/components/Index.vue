@@ -107,8 +107,10 @@ export default {
      background: linear-gradient(to right,#00774e 0,#00d994 100%);
     .buycar
       background url(../assets/buycar.png) no-repeat 
-      background-size 20px 20px
-      background-position 66px 5px
+      background-size 1.5em
+      background-position 0.5em 0.2em
       height 2em
       display block
+      float right
+      width 2em
 </style>
