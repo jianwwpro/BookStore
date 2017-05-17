@@ -29,6 +29,9 @@
          </ul>
        </li>
     </ul>
+    <div class="button">
+      <mt-button type="default">提交订单</mt-button>
+    </div>
   </div>
 </template>
 <script>
@@ -102,4 +105,15 @@ export default {
         color red
         right 1em
         top 40%
+  .button
+    position fixed
+    bottom  0
+    left 0
+    text-align center
+    width 100%
+    border-top 1px solid #ddd
+    .mint-button
+      background-color red
+      color #fff
+      width 100%
 </style>
