@@ -12,6 +12,8 @@ import store from './store'
 Vue.config.productionTip = false
 Vue.use(MintUI)
 Vue.use(VueResource)
+
+Vue.http.get.options = { withCredentials: true }
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

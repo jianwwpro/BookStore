@@ -8,7 +8,7 @@ import Login from '@/components/Login'
 
 Vue.use(Router)
 
-export default new Router({
+let router = new Router({
   routes: [
     {
       path: '/',
@@ -38,3 +38,13 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach((to,from ,next)=>{
+  //let sessionid = localStorage.getItem('sessionid')
+  //document.cookie="JSESSIONID="+sessionid
+  next()
+})
+
+
+
+export default router

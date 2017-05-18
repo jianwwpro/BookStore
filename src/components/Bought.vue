@@ -34,10 +34,17 @@
   </div>
 </template>
 <script>
-import { Header } from 'mint-ui' 
+import { Header,Toast } from 'mint-ui' 
+import api from '../api/Api'
 export default {
   name: 'bought',
   mounted(){
+    api.bookList().then(res=>{
+      Toast(JSON.stringify(res))
+    },error=>{
+      Toast(JSON.stringify(error))
+      
+    })
   },
   data () {
     return {
