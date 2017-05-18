@@ -4,6 +4,7 @@ import Index from '@/components/Index'
 import Cart from '@/components/Cart'
 import Near from '@/components/Near'
 import Bought from '@/components/Bought'
+import Login from '@/components/Login'
 
 Vue.use(Router)
 
@@ -28,6 +29,12 @@ export default new Router({
       path: '/Bought',
       name: 'Bought',
       component: Bought
+    },
+    {
+      path: '/Login',
+      name: 'Login',
+      component: Login
+
     }
   ]
 })

@@ -9,7 +9,7 @@
       </mt-header>
      <ul>
        <li>
-         <a class="link" @click='openBarcode'>
+         <a class="link" @click='scanBook'>
             <img src="../assets/QRcode.png" alt="">
             扫码购书
          </a>
@@ -45,10 +45,17 @@ import wx from 'weixin-js-sdk'
 import { mapGetters } from 'vuex'
 export default {
   name: 'index',
-
+  computed:{
+    ...mapGetters({
+      config:'config'
+    })
+  },
   mounted(){
-   
-    
+    let url = window.location.href
+    console.log(url)
+    if(url.indexOf('?')>0){
+      window.location.href=window.location.href.split('?')[0]
+    }
   },
   data () {
     return {
@@ -69,50 +76,61 @@ export default {
    
   },
   methods: {
-    
-    open(){
-      wx.error(er=>{
-        Toast(er);
-      });
-      wx.ready(()=>{
-        wx.scanQRCode({
-            needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-            scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-            success: res=>{
-              var msg = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-              Toast(msg);
-            }
-          })  
-      });
-    },
+  //打开二维码
     openBarcode(){
-      this.$store.dispatch('save')
-      this.open()
-      // if(this.appId==''){
-      //   Indicator.open('开启中...');
-      //   this.$http.jsonp("http://i.brainhunt.cn/caiyunboss-interface/js/config?url="+location.href.split('#')[0]).then(res=>{
-      //     let data = res.data;
-      //     var appId = data.appId;
-      //     var timestamp = data.timestamp;
-      //     var nonceStr = data.noncestr;
-      //     var signature = data.signature;
-      //     this.appId=appId
-      //     this.timestamp=timestamp
-      //     this.nonceStr=nonceStr
-      //     this.signature=signature
-      //     console.log(this.appId)
-          
-      //     this.wxConfig()
-      //     this.open()
-      //     Indicator.close();
-      //   });
-      // }else {
-        
-      //   this.open()
-        
-      // }
+      
 
-    }
+        return new Promise((resolve,reject)=>{
+          wx.config(this.config)
+          wx.ready(()=>{
+            wx.scanQRCode({
+              needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+              scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+              success: res=>{
+                var msg = res.resultStr // 当needResult 为 1 时，扫码返回的结果
+                resolve(msg)
+              }
+            })      
+          });
+          wx.error(er=>{
+            Toast(er)
+            reject(er)
+          });
+          
+        })
+        
+      },
+      //扫码购书
+      scanBook(){
+
+        if(true){
+          this.$router.push('Login')
+          return 
+        }
+        if(this.config==null){
+          Indicator.open({
+            text: '加载中...',
+            spinnerType: 'fading-circle'
+          });
+          this.$store.dispatch('save').then(res=>{
+            Indicator.close()
+            this.openBarcode().then(isbn=>{
+              Toast("微信不存在"+"\t处理ISBN："+isbn)
+            },er=>{
+              Toast(er)
+            })
+        },err=>{
+          console.log(err)
+        })
+      }else {
+          this.openBarcode().then(isbn=>{
+            Toast("微信存在:"+this.config.appId+"\t处理ISBN："+isbn)
+          },er=>{
+            Toast(er)
+          })
+        }
+
+      }
   }
 
 }
