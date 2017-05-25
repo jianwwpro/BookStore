@@ -43,21 +43,23 @@
 import { Header,Indicator,Toast } from 'mint-ui' 
 import wx from 'weixin-js-sdk'
 import { mapGetters } from 'vuex'
+
 export default {
   name: 'index',
-  computed:{
+  computed:{//vuex的内容
     ...mapGetters({
       config:'config'
     })
   },
-  mounted(){
+  mounted(){//生命周期中的mounted阶段
     let url = window.location.href
     console.log(url)
     if(url.indexOf('?')>0){
       window.location.href=window.location.href.split('?')[0]
     }
   },
-  data () {
+  
+  data () {//controller 数据request.setAttrbute('msg','彩云书店');request.setAttrbute('msg','彩云书店')
     return {
       msg: '彩云书店',
       appId:'',
@@ -102,26 +104,29 @@ export default {
       },
       //扫码购书
       scanBook(){
-
-        if(true){
-          this.$router.push('Login')
-          return 
-        }
+        // let sessionid = localStorage.getItem('sessionid')
+        //  if(sessionid==null||sessionid==''){
+        //    this.$router.push('Login')
+        //    return
+        // }
+        console.log(this.config)
         if(this.config==null){
           Indicator.open({
             text: '加载中...',
             spinnerType: 'fading-circle'
           });
+          console.log('xxx1')
           this.$store.dispatch('save').then(res=>{
-            Indicator.close()
-            this.openBarcode().then(isbn=>{
-              Toast("微信不存在"+"\t处理ISBN："+isbn)
-            },er=>{
-              Toast(er)
+              Indicator.close()
+              console.log('xxx')
+              this.openBarcode().then(isbn=>{
+                Toast("微信不存在"+"\t处理ISBN："+isbn)
+              },er=>{
+                Toast(er)
+              })
+            },err=>{
+              console.log(err)
             })
-        },err=>{
-          console.log(err)
-        })
       }else {
           this.openBarcode().then(isbn=>{
             Toast("微信存在:"+this.config.appId+"\t处理ISBN："+isbn)

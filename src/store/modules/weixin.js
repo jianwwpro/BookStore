@@ -18,8 +18,9 @@ const actions = {
   },
   //保存配置
   save ({commit,state}) {
+    
     return new Promise((resolve,reject)=>{
-      api.wxconfig().then(res=>{
+      api.wx.wxconfig().then(res=>{
         let that = res.data
         let config =
         {

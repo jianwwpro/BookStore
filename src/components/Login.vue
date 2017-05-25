@@ -1,9 +1,17 @@
 <template>
   <div class="login">
-  <input type="text" name='username'>
-  <input type="password">
-  <mt-button type="primary" @click='login'>登录</mt-button>
+    <input type="text" name='username'>
+    <input type="password">
+    <mt-button type="primary" @click='login'>登录</mt-button>
+    <div class="div1">
+      <input type="text">
+    </div>
+
+    <div class="div2">
+      <input type="text">
+    </div>
   </div>
+
 </template>
 
 <script>
@@ -12,7 +20,7 @@
     
     methods:{
       login(){
-        api.login().then(res=>{
+        api.user.login().then(res=>{
           console.log('ee')
           if(res.success==true){
             console.log('ee')
@@ -30,4 +38,5 @@
 
 <style scoped lang="stylus">
   
+
 </style>
