@@ -11,7 +11,7 @@
        <li>
          <a class="link" @click='scanBook'>
             <img src="../assets/QRcode.png" alt="">
-            扫码购书
+            真扫码购书
          </a>
        </li>
        <li>
