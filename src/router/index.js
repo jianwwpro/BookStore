@@ -5,6 +5,7 @@ import Cart from '@/components/Cart'
 import Near from '@/components/Near'
 import Bought from '@/components/Bought'
 import Login from '@/components/Login'
+import Scan from '@/components/Scan'
 
 Vue.use(Router)
 
@@ -35,7 +36,11 @@ let router = new Router({
       name: 'Login',
       component: Login
 
-    }
+    }, {
+      path: '/Scan',
+      name: 'Scan',
+      component: Scan
+    },
   ]
 })
 
