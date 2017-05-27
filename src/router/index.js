@@ -5,6 +5,7 @@ import Cart from '@/components/Cart'
 import Near from '@/components/Near'
 import Bought from '@/components/Bought'
 import Login from '@/components/Login'
+import OrderDetail from '@/components/OrderDetail'
 
 Vue.use(Router)
 
@@ -34,7 +35,11 @@ let router = new Router({
       path: '/Login',
       name: 'Login',
       component: Login
-
+    },
+    {
+      path: '/OrderDetail',
+      name: 'OrderDetail',
+      component: OrderDetail
     }
   ]
 })
