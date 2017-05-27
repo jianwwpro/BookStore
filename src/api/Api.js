@@ -1,6 +1,6 @@
 import Vue from 'vue'
-const  API_URL= 'http://i.brainhunt.cn/caiyunboss-interface/'
-//const  API_URL= 'http://localhost:8080/caiyunboss-interface/'
+// const  API_URL= 'http://i.brainhunt.cn/caiyunboss-interface/'
+const  API_URL= 'http://localhost:8081/caiyunboss-interface/'
 
 export default {
   wx:{
@@ -41,7 +41,7 @@ export default {
       })
     },
     userInfo(){
-      return new Promise((resolve,reejct)=>{
+      return new Promise((resolve,reject)=>{
         Vue.http.get('url?a=xx&b=x',{credentials: true}).then(res=>{
             resolve(res.body)
           },err=>{
@@ -49,8 +49,24 @@ export default {
           })
       })
     }
-
-
-  
+  },
+  cart:{
+    // 用户购物车提交书单
+    submitCart(selectedList){
+      return new Promise((resolve,reject) => {
+        Vue.http.post(
+          API_URL+"bookStore/order/submitCart",
+          {
+            selectedList
+          },
+          {credentials: true}
+        ).then( res => {
+          resolve(res.body);
+        }, error => {
+          reject(error);
+        })
+      })
+    }
   }
+
 }
