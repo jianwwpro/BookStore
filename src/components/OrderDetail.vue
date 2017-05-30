@@ -1,6 +1,6 @@
 <template>
   <div class="cart">
-    
+    订单提交成功
   </div>
 </template>
 <script>
