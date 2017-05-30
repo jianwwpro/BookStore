@@ -10,7 +10,7 @@ import api from '../api/Api'
 export default {
   name: 'cart',
   mounted(){
-    console.log("页面加载时加载")
+    // console.log("页面加载时加载")
   },
   data () {
     return {
@@ -27,6 +27,12 @@ export default {
   },
   methods: {
 
+  },
+  ready: function(){
+      console.log( this.$route.params.orderNum);
+      console.log( this.$route.params.orderDetail);
+      console.log('orderNum: ' + this.$route.params.orderNum);
+      console.log('orderDetail: ' + this.$route.params.orderDetail);
   }
 
 }

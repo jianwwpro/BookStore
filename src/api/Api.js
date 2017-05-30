@@ -61,6 +61,7 @@ export default {
           },
           {credentials: true}
         ).then( res => {
+          alert(1);
           resolve(res.body);
         }, error => {
           reject(error);

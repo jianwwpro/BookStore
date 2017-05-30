@@ -34,7 +34,7 @@ import api from '../api/Api'
 export default {
   name: 'cart',
   mounted(){
-    console.log("页面加载时加载")
+    // console.log("页面加载时加载")
   },
   data () {
     return {
@@ -74,7 +74,14 @@ export default {
       api.cart.submitCart(selectedBookList).then(res => {
         if(res.success === true){
           console.log(res.orderNum);
-          this.$router.push({ name: 'OrderDetail', params: { orderNum : res.orderNum ,orderDetail : res.orderDetail}})
+          console.log(res.orderDetail);
+          this.$router.push({ 
+            name: 'OrderDetail', 
+            params: { 
+              orderNum : res.orderNum ,
+              orderDetail : res.orderDetail
+            }
+          })
         } else{
           alert(res.msg);
         }
