@@ -1,6 +1,6 @@
 import Vue from 'vue'
 // const  API_URL= 'http://i.brainhunt.cn/caiyunboss-interface/'
-const  API_URL= 'http://localhost:8081/caiyunboss-interface/'
+const  API_URL= 'http://localhost:8083/caiyunboss-interface/'
 
 export default {
   wx:{
