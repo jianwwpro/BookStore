@@ -46,7 +46,7 @@ let router = new Router({
       component: Scan
     },
     {
-      path: '/OrderDetail',
+      path: '/OrderDetail/:orderNum',
       name: 'OrderDetail',
       component: OrderDetail
     }
