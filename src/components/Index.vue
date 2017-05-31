@@ -9,10 +9,10 @@
       </mt-header>
      <ul>
        <li>
-         <a class="link" @click='scanBook'>
+         <router-link class='link' to="/Scan">
             <img src="../assets/QRcode.png" alt="">
-            扫码购书啊
-         </a>
+            扫码购书
+         </router-link>
        </li>
        <li>
           <router-link class="link" to="/Near">
@@ -35,6 +35,8 @@
        <p>4、选购完成后，点击结算，将结算页面展示给店员，配合店员完成扫码确认工作。</p>
        <p>5、待店员确认完成后，界面出现结算完成标识，这时您就可以将图书带走了。</p>
        <p>6、请不要忘记在图书到期前归还到图书馆。</p>
+       <p>7、<router-link class="link" to="/Bought">什么鬼</router-link></p>
+       
      </div>
   </div>
 </template>
@@ -46,26 +48,11 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'index',
-  computed:{//vuex的内容
-    ...mapGetters({
-      config:'config'
-    })
-  },
-  mounted(){//生命周期中的mounted阶段
-    let url = window.location.href
-    console.log(url)
-    if(url.indexOf('?')>0){
-      window.location.href=window.location.href.split('?')[0]
-    }
-  },
+  
   
   data () {//controller 数据request.setAttrbute('msg','彩云书店');request.setAttrbute('msg','彩云书店')
     return {
-      msg: '彩云书店',
-      appId:'',
-      timestamp:'',
-      nonceStr:'',
-      signature:''
+     
     }
   },
   route: {
@@ -78,64 +65,6 @@ export default {
    
   },
   methods: {
-  //打开二维码
-    openBarcode(){
-      
-
-        return new Promise((resolve,reject)=>{
-          wx.config(this.config)
-          wx.ready(()=>{
-            wx.scanQRCode({
-              needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-              scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-              success: res=>{
-                var msg = res.resultStr // 当needResult 为 1 时，扫码返回的结果
-                resolve(msg)
-              }
-            })      
-          });
-          wx.error(er=>{
-            Toast(er)
-            reject(er)
-          });
-          
-        })
-        
-      },
-      //扫码购书
-      scanBook(){
-        // let sessionid = localStorage.getItem('sessionid')
-        //  if(sessionid==null||sessionid==''){
-        //    this.$router.push('Login')
-        //    return
-        // }
-        console.log(this.config)
-        if(this.config==null){
-          Indicator.open({
-            text: '加载中...',
-            spinnerType: 'fading-circle'
-          });
-          console.log('xxx1')
-          this.$store.dispatch('save').then(res=>{
-              Indicator.close()
-              console.log('xxx')
-              this.openBarcode().then(isbn=>{
-                Toast("微信不存在"+"\t处理ISBN："+isbn)
-              },er=>{
-                Toast(er)
-              })
-            },err=>{
-              console.log(err)
-            })
-      }else {
-          this.openBarcode().then(isbn=>{
-            Toast("微信存在:"+this.config.appId+"\t处理ISBN："+isbn)
-          },er=>{
-            Toast(er)
-          })
-        }
-
-      }
   }
 
 }

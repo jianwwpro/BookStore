@@ -5,44 +5,50 @@
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
+
+    <input type="checkbox" v-model="checkAll">全选
+
     <ul class="book_list">
-       <li>
-         <input type="checkbox">
+       <li v-for='book in bookList'>
+         <input type="checkbox" v-bind:value="book.id" v-model="book.checked">
          <img src="../assets/book_face.png" alt="">
          <ul class="details">
-          <li class="book_name"><b>《我的美丽我做主》</b></li>
+          <li class="book_name"><b>《{{book.bookName}}》</b></li>
           <li class="book_author"><span>王晓梅</span>/<span>江苏凤凰出版社</span>/<span>2017</span></li>
           <li class="book_pricing">定价：<span>20.00</span>元</li>
           <li class="book_number">ISBN：<span>97828288838881</span></li>
           <li class="delete">删除</li>
          </ul>
        </li>
-       <li>
-         <input type="checkbox">
-         <img src="../assets/book_face.png" alt="">
-         <ul class="details">
-          <li class="book_name"><b>《我的美丽我做主》</b></li>
-          <li class="book_author"><span>王晓梅</span>/<span>江苏凤凰出版社</span>/<span>2017</span></li>
-          <li class="book_pricing">定价：<span>20.00</span>元</li>
-          <li class="book_number">ISBN：<span>97828288838881</span></li>
-          <li class="delete">删除</li>
-         </ul>
-       </li>
+      
     </ul>
     <div class="button">
-      <mt-button type="default">提交订单</mt-button>
+      <mt-button type="default" @click="submitCart">提交订单</mt-button>
     </div>
   </div>
 </template>
 <script>
 import { Header } from 'mint-ui' 
+import api from '../api/Api'
+
 export default {
   name: 'cart',
   mounted(){
+    // console.log("页面加载时加载")
   },
   data () {
     return {
-      msg: '购物车'
+      checkAll: false,
+      msg: '购物车',
+      bookList:[
+        {
+          id:3360919,
+          bookName:'java'
+        },{
+          id:3360089,
+          bookName:'编程'
+        }
+      ]
     }
   },
   route: {
@@ -54,9 +60,52 @@ export default {
    
   },
   methods: {
-    
-  }
- 
+
+
+    // 购物车提交订单
+    submitCart(){
+      //获取购物车里勾选的图书
+      var selectedBookList = [];
+      this.bookList.map(({ id, bookName, checked }) => {
+        if(checked != null && checked){
+          selectedBookList.push(id);
+        }
+      })
+
+      // 提交图书
+      api.cart.submitCart(selectedBookList).then(res => {
+        if(res.success === true){
+          console.log(res.orderNum);
+          console.log(res.orderDetail);
+          this.$router.push({ 
+            name: 'OrderDetail', 
+            params: { 
+              orderNum : res.orderNum ,
+              orderDetail : res.orderDetail
+            }
+          })
+        } else{
+          alert(res.msg);
+        }
+
+      }, err => {
+         console.log(err);
+      })
+    }
+  },
+  // 监听事件
+  watch: {
+    'checkAll': { //全选事件
+      handler: function (val) { // val新值
+        for( var i = 0 ; i < this.bookList.length ; i++ ){
+          var book = this.bookList[i];
+          book.checked = val;
+        }
+      }
+    }
+  },
+
+
 }
 
 </script>
