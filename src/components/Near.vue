@@ -5,49 +5,59 @@
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
-    <ul class="bookStoreList">
-      <li>
-        <img src="../assets/ting3.png" alt="">
+
+<mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
+ <ul class="bookStoreList">
+      
+      <li v-for='store in storeList.rows'>
+        <img src='' alt="">
         <ul>
-          <li class="store_name">海淀图书大厦<span class="allow_buy">(可以购书)</span></li>
-          <li class="store_place">海淀区中关村12号</li>
-          <li class="open_time">营业时间：<span>10:00~23:00</span></li>
+          <li class="store_name">{{store.name}}<span class="allow_buy">(可以购书)</span></li>
+          <li class="store_place">{{store.address}}</li>
+          <li class="open_time">营业时间：<span>{{store.begTimeStr}}~{{store.endTimeStr}}</span></li>
           <li class="go_there"><a href="">到这去</a></li>
           <li class="distance"><span>3.8</span>km</li>
         </ul>
       </li>
-      <li>
-        <img src="../assets/ting3.png" alt="">
-        <ul>
-          <li class="store_name">海淀图书大厦<span class="allow_buy">(可以购书)</span></li>
-          <li class="store_place">海淀区中关村12号</li>
-          <li class="open_time">营业时间：<span>10:00~23:00</span></li>
-          <li class="go_there"><a href="">到这去</a></li>
-          <li class="distance"><span>3.8</span>km</li>
-        </ul>
-      </li>
-      <li>
-        <img src="../assets/ting3.png" alt="">
-        <ul>
-          <li class="store_name">海淀图书大厦<span class="refuse_buy">(可以购书)</span></li>
-          <li class="store_place">海淀区中关村12号</li>
-          <li class="open_time">营业时间：<span>10:00~23:00</span></li>
-          <li class="go_there"><a href="">到这去</a></li>
-          <li class="distance"><span>3.8</span>km</li>
-        </ul>
-      </li>
+     
     </ul>
+</mt-loadmore>
+
+    
   </div>
 </template>
 <script>
-import { Header } from 'mint-ui' 
+
+
+import { Header,Loadmore,Indicator  } from 'mint-ui' 
+// 引入vue-amap
+
+//如何在页面加载的时候执行method中的查询书店方法,假如查询成功  返回的result 如何在页面中调用  如何在页面加载的时候加载高德地图  进行使用者的定位
+import api from '../api/Api'
+import wx from 'weixin-js-sdk'
+import { mapGetters } from 'vuex'
+
 export default {
+ 
   name: 'near',
-  mounted(){
+  computed:{//vuex的内容
+    ...mapGetters({
+      config:'config'
+    })
   },
   data () {
     return {
-      msg: '购物车'
+      msg: '购物车',
+      storeList:{
+        total:0,
+        rows:[],
+        pages:0
+      },
+      allLoaded:false,
+      page: 1,
+      rows: 1,
+      
+
     }
   },
   route: {
@@ -58,10 +68,83 @@ export default {
   components: {
    
   },
-  methods: {
-    
-  }
+  methods: 
+  {
+    getLocation(){
+      return new Promise((resolve,reject)=>{
+       wx.config(this.config)
+        wx.ready(function(){
+          wx.getLocation({
+              success: function (res) {  
+                resolve(res)
+              },  
+              cancel: function (res) {  
+                reject(res)
+              }
+            });
+        })
+      })
 
+    },
+    openLocation(){
+        if(this.config==null){
+          console.log('wx config is null')
+          Indicator.open({
+            text: '加载中...',
+            spinnerType: 'fading-circle'
+          });
+          this.$store.dispatch('save').then(res=>{
+              Indicator.close()
+              return this.getLocation();
+            },err=>{
+              console.log(err)
+            })
+      }else {
+        
+          return this.getLocation()
+        }
+
+     
+      
+    },
+    getList(page,rows){
+      
+      api.book.bookStoreList(page,rows).then(res=>{
+        if(page==1){
+          this.storeList=res;
+        }else
+          for(let i=0;i<res.rows.length;i++){
+            this.storeList.rows.push(res.rows[i])
+          }
+        
+      
+      },error=>{
+
+      })
+    },
+    loadTop() {
+      
+      this.$refs.loadmore.onTopLoaded();
+    },
+    loadBottom() {
+        if(this.page>=this.storeList.pages)
+            this.allLoaded = true;// if all data are loaded
+        else 
+       // console.log('当前页'+this.page++)
+            this.getList(++this.page,this.rows);
+          //this.storeList.rows.push({id:1,name:new Date().getTime()})
+      this.$refs.loadmore.onBottomLoaded();
+      console.log(this.storeList)
+    }
+  },
+  mounted(){
+    this.openLocation().then(res=>{
+      alert(JSON.stringfy(res))
+    },error=>{
+
+    })
+    this.getList(this.page,this.rows);
+  }
 }
 </script>
 

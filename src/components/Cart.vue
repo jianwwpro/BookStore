@@ -60,6 +60,8 @@ export default {
    
   },
   methods: {
+
+
     // 购物车提交订单
     submitCart(){
       //获取购物车里勾选的图书
@@ -101,7 +103,9 @@ export default {
     }
   },
 
+
 }
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
