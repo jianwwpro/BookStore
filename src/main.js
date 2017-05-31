@@ -10,8 +10,6 @@ import {currency} from './filter/currency'
 
 import store from './store'
 
-
-
 Vue.config.productionTip = false
 Vue.use(MintUI)
 Vue.use(VueResource)
