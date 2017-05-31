@@ -70,32 +70,23 @@ export default {
   },
   methods: 
   {
-    openLocation(){
-
-      console.log(';xx')
-      wx.ready(()=>{
-        console.log('ready')
-      });
-
-
-      wx.checkJsApi({
-          jsApiList: [
-              'getLocation'
-          ],
-          success: function (res) {
-            console.log('rrr')
-              // alert(JSON.stringify(res));
-              // alert(JSON.stringify(res.checkResult.getLocation));
-              if (res.checkResult.getLocation == false) {
-                  alert('你的微信版本太低，不支持微信JS接口，请升级到最新的微信版本！');
-                  return;
-              }
-          }
-      });
-    },
     getLocation(){
+      return new Promise((resolve,reject)=>{
+       wx.config(this.config)
+        wx.ready(function(){
+          wx.getLocation({
+              success: function (res) {  
+                resolve(res)
+              },  
+              cancel: function (res) {  
+                reject(res)
+              }
+            });
+        })
+      })
 
-        console.log(this.config)
+    },
+    openLocation(){
         if(this.config==null){
           console.log('wx config is null')
           Indicator.open({
@@ -104,17 +95,13 @@ export default {
           });
           this.$store.dispatch('save').then(res=>{
               Indicator.close()
-              console.log('xxx')
-
-              
-              this.openLocation();
-            
+              return this.getLocation();
             },err=>{
               console.log(err)
             })
       }else {
-        console.log('wx config is not null')
-          this.openLocation()
+        
+          return this.getLocation()
         }
 
      
@@ -151,7 +138,11 @@ export default {
     }
   },
   mounted(){
-    this.getLocation();
+    this.openLocation().then(res=>{
+      alert(JSON.stringfy(res))
+    },error=>{
+
+    })
     this.getList(this.page,this.rows);
   }
 }
