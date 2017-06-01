@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
-const  API_URL= 'http://i.brainhunt.cn/caiyunboss-interface/'
-//const  API_URL= 'http://localhost:8080/caiyunboss-interface/'
+// const  API_URL= 'http://i.brainhunt.cn/caiyunboss-interface/'
+const  API_URL= 'http://localhost:8081/caiyunboss-interface/'
 
 export default {
   wx:{
@@ -74,6 +74,60 @@ export default {
 
   
   cart:{
+    // 查询购物车内容
+    queryBook(){
+      return new Promise((resolve,reject) => {
+        Vue.http.post(
+          API_URL+"bookStore/cart/queryBook",
+          {
+            
+          },
+          {
+            credentials: true
+          }
+        ).then( res => {
+          resolve(res.body);
+        }, error => {
+          reject(error);
+        })
+      })
+    },
+    // 扫码添加购物车
+    addBook(isbn){
+      return new Promise((resolve,reject) => {
+        Vue.http.post(
+          API_URL+"bookStore/cart/addBook",
+          {
+            isbn
+          },
+          {
+            credentials: true
+          }
+        ).then( res => {
+          resolve(res.body);
+        }, error => {
+          reject(error);
+        })
+      })
+    },
+    // 删除购物车里的图书
+    delCartBook(cartId){
+      return new Promise((resolve,reject) => {
+        Vue.http.post(
+          API_URL+"bookStore/cart/delBook",
+          {
+            cartId
+          },
+          {
+            credentials: true
+          }
+        ).then( res => {
+          resolve(res.body);
+        }, error => {
+          reject(error);
+        })
+      })
+    },
     // 用户购物车提交书单
     submitCart(selectedList){
       return new Promise((resolve,reject) => {

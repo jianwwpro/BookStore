@@ -10,14 +10,14 @@
 
     <ul class="book_list">
        <li v-for='book in bookList'>
-         <input type="checkbox" v-bind:value="book.id" v-model="book.checked">
+         <input type="checkbox" v-bind:value="book.caiBook.id" v-model="book.checked">
          <img src="../assets/book_face.png" alt="">
          <ul class="details">
-          <li class="book_name"><b>《{{book.bookName}}》</b></li>
-          <li class="book_author"><span>王晓梅</span>/<span>江苏凤凰出版社</span>/<span>2017</span></li>
-          <li class="book_pricing">定价：<span>20.00</span>元</li>
-          <li class="book_number">ISBN：<span>97828288838881</span></li>
-          <li class="delete">删除</li>
+          <li class="book_name"><b>《{{book.caiBook.name}}》</b></li>
+          <li class="book_author"><span>{{book.caiBook.author}}</span>/<span>{{book.caiBook.press}}</span>/<span>{{book.caiBook.publishYear}}</span></li>
+          <li class="book_pricing">定价：<span>{{book.caiBook.price}}</span>元</li>
+          <li class="book_number">ISBN：<span>{{book.caiBook.isbn}}</span></li>
+          <li class="delete" @click="delCartBook(book.id)">删除</li>
          </ul>
        </li>
       
@@ -35,20 +35,23 @@ export default {
   name: 'cart',
   mounted(){
     // console.log("页面加载时加载")
+    api.cart.queryBook().then(res => {
+      if(res.success === true){
+        console.log(res.bookList);
+        this.bookList = res.bookList;
+      } else{
+        alert(res.msg);
+      }
+    }, err => {
+      console.log(err);
+    })
+
   },
   data () {
     return {
       checkAll: false,
       msg: '购物车',
-      bookList:[
-        {
-          id:3360919,
-          bookName:'java'
-        },{
-          id:3360089,
-          bookName:'编程'
-        }
-      ]
+      bookList:[]
     }
   },
   route: {
@@ -60,15 +63,13 @@ export default {
    
   },
   methods: {
-
-
     // 购物车提交订单
     submitCart(){
       //获取购物车里勾选的图书
       var selectedBookList = [];
-      this.bookList.map(({ id, bookName, checked }) => {
+      this.bookList.map(({ booksId, checked }) => {
         if(checked != null && checked){
-          selectedBookList.push(id);
+          selectedBookList.push(booksId);
         }
       })
 
@@ -89,7 +90,31 @@ export default {
       }, err => {
          console.log(err);
       })
+    },
+
+    // 删除购物车内容
+    delCartBook(cartId){
+      api.cart.delCartBook(cartId).then(res => {
+        // 删除购物车时,删除页面上相应的内容
+        if(res.success === true){
+          let index = -1;
+          for(let i=0;i<this.bookList.length;i++){
+            if(this.bookList[i].id===cartId){
+              index=i;
+            }
+          }
+          if(index>-1){
+            this.bookList.splice(index,1)
+          }
+          
+        } else{
+          alert(res.msg);
+        }
+      }, err => {
+         console.log(err);
+      })
     }
+
   },
   // 监听事件
   watch: {

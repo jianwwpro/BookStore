@@ -1,6 +1,8 @@
 <template>
   <div class="scan">
-     
+     <div>返回首页</div>
+     <div>在扫一本</div>
+     <div>去购物车</div>
   </div>
 </template>
 
@@ -8,6 +10,7 @@
 import { Header,Indicator,Toast } from 'mint-ui' 
 import wx from 'weixin-js-sdk'
 import { mapGetters } from 'vuex'
+import api from '../api/Api'
 
 export default {
   name: 'index',
@@ -22,7 +25,8 @@ export default {
       window.location.href=window.location.href.split('?')[0]
     }
 
-    this.scanBook();
+    // this.scanBook();
+    this.addBookCart(9787030181558);
   },
   
   data () {//controller 数据request.setAttrbute('msg','彩云书店');request.setAttrbute('msg','彩云书店')
@@ -43,8 +47,20 @@ export default {
    
   },
   methods: {
+    //添加图书至购物车
+    addBookCart(isbn){
+      api.cart.addBook(isbn).then(res => {
+        if(res.success == true){
+          alert("添加成功");
+        } else{
+          alert(res.msg);
+        }
+      },err => {
+        console.log(err);
+      })
+    },
+
     openBarcode(){
-      
 
         return new Promise((resolve,reject)=>{
           wx.config(this.config)
