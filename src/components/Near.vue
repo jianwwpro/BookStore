@@ -10,13 +10,13 @@
  <ul class="bookStoreList">
       
       <li v-for='store in storeList.rows'>
-        <img src='' alt="">
+        <img src='../assets/王府井书店.png' alt="">
         <ul>
           <li class="store_name">{{store.name}}<span class="allow_buy">(可以购书)</span></li>
           <li class="store_place">{{store.address}}</li>
           <li class="open_time">营业时间：<span>{{store.begTimeStr}}~{{store.endTimeStr}}</span></li>
           <li class="go_there"><a href="">到这去</a></li>
-          <li class="distance"><span>3.8</span>km</li>
+          <li class="distance"><span>{{store.distence}}</span>km</li>
         </ul>
       </li>
      
@@ -32,7 +32,7 @@
 import { Header,Loadmore,Indicator  } from 'mint-ui' 
 // 引入vue-amap
 
-//如何在页面加载的时候执行method中的查询书店方法,假如查询成功  返回的result 如何在页面中调用  如何在页面加载的时候加载高德地图  进行使用者的定位
+
 import api from '../api/Api'
 import wx from 'weixin-js-sdk'
 import { mapGetters } from 'vuex'
@@ -51,13 +51,14 @@ export default {
       storeList:{
         total:0,
         rows:[],
-        pages:0
+        pages:0,
+        distence:[],
+        
+
       },
       allLoaded:false,
       page: 1,
       rows: 1,
-      
-
     }
   },
   route: {
@@ -88,7 +89,7 @@ export default {
     },
     openLocation(){
         if(this.config==null){
-          console.log('wx config is null')
+          //console.log('wx config is null')
           Indicator.open({
             text: '加载中...',
             spinnerType: 'fading-circle'
@@ -103,7 +104,8 @@ export default {
         
           return this.getLocation()
         }
-
+        //正式环境请注释
+        return new Promise((resolve,reject)=>{})
      
       
     },
@@ -112,12 +114,13 @@ export default {
       api.book.bookStoreList(page,rows).then(res=>{
         if(page==1){
           this.storeList=res;
+          
         }else
           for(let i=0;i<res.rows.length;i++){
             this.storeList.rows.push(res.rows[i])
           }
         
-      
+      console.log(this.storeList)
       },error=>{
 
       })
@@ -134,12 +137,13 @@ export default {
             this.getList(++this.page,this.rows);
           //this.storeList.rows.push({id:1,name:new Date().getTime()})
       this.$refs.loadmore.onBottomLoaded();
-      console.log(this.storeList)
+      //console.log(this.storeList)
     }
   },
   mounted(){
     this.openLocation().then(res=>{
-      alert(JSON.stringfy(res))
+      //alert(JSON.stringfy(res))
+      console.log("经纬度信息"+res)
     },error=>{
 
     })

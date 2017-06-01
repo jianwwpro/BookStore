@@ -49,6 +49,11 @@ let router = new Router({
       path: '/OrderDetail',
       name: 'OrderDetail',
       component: OrderDetail
+    },
+    {
+      path: '/Index',
+      name: 'Index',
+      component: Index
     }
   ]
 })
