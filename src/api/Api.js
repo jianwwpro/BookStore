@@ -32,7 +32,7 @@ export default {
         //console.log('eeee')
         /*resolve([{id:1,name:'xxx',logo:''},{id:2,name:'xxx',logo:''},{id:3,name:'xxx',logo:''},{id:4,name:'xxx',logo:''}])*/
         let library_id  = 6
-        let lng_lat = "116.418361,39.916499"
+        let lng_lat = "116.5995,39.9067"
         Vue.http.get(API_URL+'/bookStore/store/bookStoreList?library_id='+library_id+'&lng_lat='+lng_lat+'&page='+page+'&rows='+rows,{
           credentials:true
         }).then(res=>{
@@ -48,12 +48,19 @@ export default {
     }
   },
   user:{
-    login(){
+    login(username,password){
+       
       return new Promise((resolve,reject)=>{
-          Vue.http.post(API_URL+'auth',{},{
+          Vue.http.post(
+            API_URL+'/bookStore/auth',
+          {
+            username,password
+          },
+          {
             credentials: true
-          }).then(res=>{
-            localStorage.setItem('sessionid',res.body.sessionId)
+          }
+          ).then(res=>{
+            /*localStorage.setItem('sessionid',res.body.sessionId)*/
             resolve(res.body)
           },error=>{
             reject(error)
