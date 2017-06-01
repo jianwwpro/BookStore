@@ -1,38 +1,85 @@
 <template>
   <div class="cart">
-    订单提交成功
+    <div> 订单结算</div>
+    <div> ------------------------------------</div>
+    <canvas id="barcode"></canvas>
+    <canvas id="qrCode"></canvas>
+    <div> ------已选择({{bookList.length}})本----------------------</div> 
+
+    <li v-for='book in bookList'>
+      <ul>
+        <li>{{book.bookName}}</li>
+        <a>{{book.caiBook.author}}</a><a>/{{book.pressName}}</a><a>/{{book.caiBook.publishYear}}</a>
+        <div>定价{{book.singleFixprice}}元</div>
+        <div>ISBN{{book.isbn}}</div>
+      </ul>
+    </li>
+
   </div>
 </template>
 <script>
 import { Header } from 'mint-ui' 
 import api from '../api/Api'
+import QRCode from 'qrcode' // 二维码需要的引入的
+import JsBarcode from 'jsbarcode' // 条形需要的引入的
 
 export default {
   name: 'cart',
-  mounted(){
-    // console.log("页面加载时加载")
-  },
   data () {
     return {
-      msg: '购物车'
+      msg: '购物车',
+      orderNum: this.$route.params.orderNum,//传过来的订单编号
+      bookList: []
     }
   },
-  route: {
-    data ({ to : { params: { type }}}) {
-        console.log('router')
-    } 
+  // 钩子函数,data加载过后加载
+  mounted(){
+    //二维码生成
+    QRCode.toCanvas(
+      document.getElementById('qrCode'),
+      this.orderNum, // 二维码内容:及订单编号
+      {
+         toSJISFunc: QRCode.toSJIS,
+         version:5 // 二维码大小
+      }, 
+      function (error) {
+        if (error) {
+          console.error(error)
+        }
+      }
+    ),
+    //条形码
+    JsBarcode(
+      "#barcode", 
+      this.orderNum,
+      {
+        height: 50,
+        width: 2
+      }
+    ),
+    //查询订单详情
+    this.orderDetail(this.orderNum)
+    // console.log(this.orderNum);
   },
   components: {
-   
-  },
-  methods: {
 
   },
-  ready: function(){
-      console.log( this.$route.params.orderNum);
-      console.log( this.$route.params.orderDetail);
-      console.log('orderNum: ' + this.$route.params.orderNum);
-      console.log('orderDetail: ' + this.$route.params.orderDetail);
+  // 方法
+  methods: {
+    // 取订单详情
+    orderDetail(orderNum){
+      api.order.orderDetail(orderNum).then(res => {
+        if(res.success === true){
+          this.bookList = res.bookList;
+          console.log(res.bookList);
+        } else{
+          alert(res.msg);
+        }
+      }, err => {
+          console.log(err);
+      })
+    }
+
   }
 
 }

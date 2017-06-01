@@ -75,19 +75,17 @@ export default {
       // 提交图书
       api.cart.submitCart(selectedBookList).then(res => {
         if(res.success === true){
-          console.log(res.orderNum);
-          console.log(res.orderDetail);
+          // console.log(res.orderNum);
+          // console.log(res.orderDetail);
           this.$router.push({ 
             name: 'OrderDetail', 
             params: { 
-              orderNum : res.orderNum ,
-              orderDetail : res.orderDetail
+              orderNum : res.orderNum 
             }
           })
         } else{
           alert(res.msg);
         }
-
       }, err => {
          console.log(err);
       })

@@ -3,9 +3,6 @@ import Vue from 'vue'
 //const  API_URL= 'http://i.brainhunt.cn/caiyunboss-interface/'
 const  API_URL= 'http://localhost:8080/caiyunboss-interface/'
 
-// const  API_URL= 'http://i.brainhunt.cn/caiyunboss-interface/'
-//const  API_URL= 'http://localhost:8083/caiyunboss-interface/'
-
 export default {
   wx:{
     wxconfig(){
@@ -92,15 +89,42 @@ export default {
           {
             selectedList
           },
-          {credentials: true}
+          {
+            credentials: true
+          }
         ).then( res => {
-          alert(1);
           resolve(res.body);
         }, error => {
           reject(error);
         })
       })
     }
+    
+  },
+  order:{
+    // 查询订单详情
+    orderDetail(orderNum){
+      return new Promise((resolve,reject) =>{
+        Vue.http.post(
+          API_URL+"bookStore/order/orderDetail",
+          {
+            orderNum
+          },
+          {
+            credentials: true
+          }
+        ).then( res =>{
+          resolve(res.body);
+        }, error => {
+          reject(error);
+        })
+      })
+    }
+
   }
+
+
+
+    
 
 }
