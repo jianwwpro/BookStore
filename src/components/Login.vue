@@ -37,8 +37,7 @@
           Indicator.close()
           if(res.success==true){
             console.log('登录成功1')
-           // this.$router.push({path:'/#'})
-            //localStorage.setItem('sessionid', res.sessionId)
+            localStorage.setItem('sessionid', res.sessionId)
             this.$router.push({ 
                name: 'Index'
             });
