@@ -37,11 +37,12 @@
           Indicator.close()
           if(res.success==true){
             console.log('登录成功1')
-           // this.$router.push({path:'/#'})
-            //localStorage.setItem('sessionid', res.sessionId)
-            this.$router.push({ 
-               name: 'Index'
-            });
+            console.log(res.sessionId)
+            localStorage.setItem('sessionid', res.sessionId)
+            let redirect = this.$route.query.redirect || '/'
+            console.log("qyert="+redirect)
+           
+            this.$router.push(redirect);
 
 
           }else{

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
 // const  API_URL= 'http://i.brainhunt.cn/caiyunboss-interface/'
-const  API_URL= 'http://localhost:8081/caiyunboss-interface/'
+const  API_URL= 'http://localhost:8080/caiyunboss-interface/'
 
 export default {
   wx:{
@@ -48,13 +48,14 @@ export default {
       })
     },
 
-    bookStoreList(page,rows){
+    bookStoreList(page,rows,loc){
       return new Promise((resolve,reject)=>{
         //console.log('eeee')
         /*resolve([{id:1,name:'xxx',logo:''},{id:2,name:'xxx',logo:''},{id:3,name:'xxx',logo:''},{id:4,name:'xxx',logo:''}])*/
         let library_id  = 6
-        let lng_lat = "116.5995,39.9067"
-        Vue.http.get(API_URL+'/bookStore/store/bookStoreList?library_id='+library_id+'&lng_lat='+lng_lat+'&page='+page+'&rows='+rows,{
+        let lng_lat = loc.longitude+","+loc.latitude
+        alert(lng_lat)
+        Vue.http.get(API_URL+'/bookStore/store/bookStoreList?lng_lat='+lng_lat+'&page='+page+'&rows='+rows,{
           credentials:true
         }).then(res=>{
           resolve(res.body)

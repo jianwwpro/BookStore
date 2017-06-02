@@ -12,7 +12,7 @@
       <li v-for='store in storeList.rows'>
         <img src='../assets/王府井书店.png' alt="">
         <ul>
-          <li class="store_name">{{store.name}}<span class="allow_buy">(可以购书)</span></li>
+          <li class="store_name">{{store.name}}<span class="allow_buy" v-if="store.status==0">(可以购书)</span><span class="refuse_buy" v-if="store.status==1">(暂停采购)</span></li>
           <li class="store_place">{{store.address}}</li>
           <li class="open_time">营业时间：<span>{{store.begTimeStr}}~{{store.endTimeStr}}</span></li>
           <li class="go_there"><a href="">到这去</a></li>
@@ -109,9 +109,9 @@ export default {
      
       
     },
-    getList(page,rows){
+    getList(page,rows,loc){
       
-      api.book.bookStoreList(page,rows).then(res=>{
+      api.book.bookStoreList(page,rows,loc).then(res=>{
         if(page==1){
           this.storeList=res;
           
@@ -120,13 +120,14 @@ export default {
             this.storeList.rows.push(res.rows[i])
           }
         
+
       console.log(this.storeList)
       },error=>{
 
       })
     },
     loadTop() {
-      
+      //this.getList(page,rows);
       this.$refs.loadmore.onTopLoaded();
     },
     loadBottom() {
@@ -141,13 +142,15 @@ export default {
     }
   },
   mounted(){
+    
     this.openLocation().then(res=>{
-      //alert(JSON.stringfy(res))
-      console.log("经纬度信息"+res)
+      alert(JSON.stringfy(res))
+      this.getList(this.page,this.rows,res);
+      //console.log("经纬度信息"+res)
     },error=>{
 
     })
-    this.getList(this.page,this.rows);
+    
   }
 }
 </script>

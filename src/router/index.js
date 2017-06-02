@@ -14,41 +14,53 @@ Vue.use(Router)
 
 let router = new Router({
   routes: [
+    //主页
     {
       path: '/',
       name: 'Index',
       component: Index
     },
+    //购物车
     {
       path: '/Cart',
       name: 'Cart',
-      component: Cart
+      component: Cart,
+      meta: { requiresAuth: true }
     },
+    //附近书店
     {
       path: '/Near',
       name: 'Near',
-      component: Near
+      component: Near,
+      meta: { requiresAuth: true }
     },
+    //已购图书
     {
       path: '/Bought',
       name: 'Bought',
-      component: Bought
+      component: Bought,
+      meta: { requiresAuth: true }
     },
+    //登录
     {
       path: '/Login',
       name: 'Login',
       component: Login
 
 
-    }, {
+    }, 
+    //扫码购书
+    {
       path: '/Scan',
       name: 'Scan',
-      component: Scan
+      component: Scan,
+      meta: { requiresAuth: true }
     },
     {
       path: '/OrderDetail/:orderNum',
       name: 'OrderDetail',
-      component: OrderDetail
+      component: OrderDetail,
+      meta: { requiresAuth: true }
     },
     {
       path: '/Index',
@@ -58,10 +70,22 @@ let router = new Router({
   ]
 })
 
-router.beforeEach((to,from ,next)=>{
-  //let sessionid = localStorage.getItem('sessionid')
-  //document.cookie="JSESSIONID="+sessionid
-  next()
+router.beforeEach((to, from ,next)=>{
+
+if (to.matched.some(record => record.meta.requiresAuth)) {
+    let sessionId = localStorage.getItem("sessionid")
+    console.log("sessionid:"+sessionId)
+    if (!sessionId) {
+      next({
+        path: '/Login',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next() // 确保一定要调用 next()
+  }
 })
 
 
