@@ -109,9 +109,9 @@ export default {
      
       
     },
-    getList(page,rows){
+    getList(page,rows,loc){
       
-      api.book.bookStoreList(page,rows).then(res=>{
+      api.book.bookStoreList(page,rows,loc).then(res=>{
         if(page==1){
           this.storeList=res;
           
@@ -127,7 +127,7 @@ export default {
       })
     },
     loadTop() {
-      
+      //this.getList(page,rows);
       this.$refs.loadmore.onTopLoaded();
     },
     loadBottom() {
@@ -142,10 +142,11 @@ export default {
     }
   },
   mounted(){
+    
     this.openLocation().then(res=>{
       alert(JSON.stringfy(res))
-      //console.log("经纬度信息"+res)
       this.getList(this.page,this.rows,res);
+      //console.log("经纬度信息"+res)
     },error=>{
 
     })
