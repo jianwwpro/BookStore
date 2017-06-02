@@ -7,51 +7,48 @@
     </mt-header>
 
     <input type="checkbox" v-model="checkAll">全选
-
-    <ul class="book_list">
-       <li v-for='book in bookList'>
-         <input type="checkbox" v-bind:value="book.caiBook.id" v-model="book.checked">
-         <img src="../assets/book_face.png" alt="">
-         <ul class="details">
-          <li class="book_name"><b>《{{book.caiBook.name}}》</b></li>
-          <li class="book_author"><span>{{book.caiBook.author}}</span>/<span>{{book.caiBook.press}}</span>/<span>{{book.caiBook.publishYear}}</span></li>
-          <li class="book_pricing">定价：<span>{{book.caiBook.price}}</span>元</li>
-          <li class="book_number">ISBN：<span>{{book.caiBook.isbn}}</span></li>
-          <li class="delete" @click="delCartBook(book.id)">删除</li>
-         </ul>
-       </li>
-      
-    </ul>
+    <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
+      <ul class="book_list">
+        <li v-for='book in bookList.rows'>
+          <input type="checkbox" v-bind:value="book.caiBook.id" v-model="book.checked">
+          <img src="../assets/book_face.png" alt="">
+          <ul class="details">
+            <li class="book_name"><b>《{{book.caiBook.name}}》</b></li>
+            <li class="book_author"><span>{{book.caiBook.author}}</span>/<span>{{book.caiBook.press}}</span>/<span>{{book.caiBook.publishYear}}</span></li>
+            <li class="book_pricing">定价：<span>{{book.caiBook.price}}</span>元</li>
+            <li class="book_number">ISBN：<span>{{book.caiBook.isbn}}</span></li>
+            <li class="delete" @click="delCartBook(book.id)">删除</li>
+          </ul>
+        </li>
+      </ul>
+    </mt-loadmore>
     <div class="button">
       <mt-button type="default" @click="submitCart">提交订单</mt-button>
     </div>
   </div>
 </template>
 <script>
-import { Header } from 'mint-ui' 
+import { Header ,Loadmore} from 'mint-ui' 
 import api from '../api/Api'
 
 export default {
   name: 'cart',
   mounted(){
-    // console.log("页面加载时加载")
-    api.cart.queryBook().then(res => {
-      if(res.success === true){
-        console.log(res.bookList);
-        this.bookList = res.bookList;
-      } else{
-        alert(res.msg);
-      }
-    }, err => {
-      console.log(err);
-    })
-
+    // 页面加载时加载:查询购物车
+    this.queryBook(this.page,this.rows);
   },
   data () {
     return {
       checkAll: false,
       msg: '购物车',
-      bookList:[]
+       bookList:{
+        total:0,
+        rows:[],
+        pages:0
+      },
+      allLoaded:false,
+      page: 1,
+      rows: 10,
     }
   },
   route: {
@@ -94,6 +91,9 @@ export default {
 
     // 删除购物车内容
     delCartBook(cartId){
+      if (!confirm('确认要删除该吗？')) {
+        return false;
+      }
       api.cart.delCartBook(cartId).then(res => {
         // 删除购物车时,删除页面上相应的内容
         if(res.success === true){
@@ -113,6 +113,36 @@ export default {
       }, err => {
          console.log(err);
       })
+    },
+
+    // 查询购物车
+    queryBook(page,rows){
+     api.cart.queryBook(page,rows).then(res => {
+        if(res.success === true){
+          //分页处理
+          if(page==1){
+              this.bookList = res;// 第一次加载时直接赋值,之后就是添加了
+          }else{
+            for(let i=0 ; i < res.rows.length ; i++){
+              this.bookList.rows.push(res.rows[i])
+            }
+          }
+        } else{
+          alert(res.msg);
+        }
+      }, err => {
+        console.log(err);
+      })
+    },
+
+    // 下拉加载事件
+    loadBottom() {
+        if(this.page>=this.bookList.pages){
+            this.allLoaded = true;// 当前页大于等于最大页数时,不再下拉刷新
+        } else {
+            this.queryBook(++this.page,this.rows);
+        } 
+      this.$refs.loadmore.onBottomLoaded();
     }
 
   },

@@ -27,6 +27,27 @@ export default {
           })
         })
     },
+
+    //已购图书
+     hasBoughtBooks(page,rows){
+      return new Promise((resolve,reject) => {
+        Vue.http.post(
+          API_URL+"bookStore/order/hasBoughtBooks",
+          {
+            page:page,
+            rows:rows
+          },
+          {
+            credentials: true
+          }
+        ).then( res => {
+          resolve(res.body);
+        }, error => {
+          reject(error);
+        })
+      })
+    },
+
     bookStoreList(page,rows){
       return new Promise((resolve,reject)=>{
         //console.log('eeee')
@@ -82,12 +103,13 @@ export default {
   
   cart:{
     // 查询购物车内容
-    queryBook(){
+    queryBook(page,rows){
       return new Promise((resolve,reject) => {
         Vue.http.post(
           API_URL+"bookStore/cart/queryBook",
           {
-            
+            page:page,
+            rows:rows
           },
           {
             credentials: true
@@ -99,6 +121,10 @@ export default {
         })
       })
     },
+
+
+
+
     // 扫码添加购物车
     addBook(isbn){
       return new Promise((resolve,reject) => {

@@ -5,50 +5,53 @@
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
-    <ul class="book_list">
-       <li>
-         <img src="../assets/book_face.png" alt="">
-         <ul class="details">
-          <li class="book_name"><b>《我的美丽我做主》</b></li>
-          <li class="book_author"><span>王晓梅</span>/<span>江苏凤凰出版社</span>/<span>2017</span></li>
-          <li class="book_pricing">定价：<span>20.00</span>元</li>
-          <li class="book_number">ISBN：<span>97828288838881</span></li>
-          <li class="book_store">书店：<span>海淀图书大厦</span></li>
-          <li class="book_number">购买时间：<span>2017-04-25 09:08:00</span></li>
-          <li class="book_number">归还日期：<span>2017-05-25</span></li>
-         </ul>
-       </li>
-       <li>
-         <img src="../assets/book_face.png" alt="">
-         <ul class="details">
-          <li class="book_name"><b>《我的美丽我做主》</b></li>
-          <li class="book_author"><span>王晓梅</span>/<span>江苏凤凰出版社</span>/<span>2017</span></li>
-          <li class="book_pricing">定价：<span>20.00</span>元</li>
-          <li class="book_number">ISBN：<span>97828288838881</span></li>
-          <li class="book_store">书店：<span>海淀图书大厦</span></li>
-          <li class="book_number">购买时间：<span>2017-04-25 09:08:00</span></li>
-          <li class="book_number">归还日期：<span>2017-05-25</span></li>
-         </ul>
-       </li>
-    </ul>
+    <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
+      <ul class="book_list" v-for='book in bookList.rows'>
+        <li>
+          <img src="../assets/book_face.png" alt="">
+          <ul class="details">
+            <li class="book_name"><b>《{{book.bookName}}》</b></li>
+            <li class="book_author"><span>{{book.caiBook.author}}</span>/<span>{{book.pressName}}</span>/<span>{{book.caiBook.publishYear}}</span></li>
+            <li class="book_pricing">定价：<span>{{book.singleFixprice}}</span>元</li>
+            <li class="book_number">ISBN：<span>{{book.isbn}}</span></li>
+            <li class="book_store">书店：<span>{{book.bookstoreName}}</span></li>
+            <li class="book_number">购买时间：<span>{{book.updateDate}}</span></li>
+            <!-- li class="book_number">归还日期：<span>2017-05-25</span></li> -->
+          </ul>
+        </li>
+      </ul>
+    </mt-loadmore>
+
   </div>
 </template>
 <script>
-import { Header,Toast } from 'mint-ui' 
+import { Header,Toast,Loadmore } from 'mint-ui' 
 import api from '../api/Api'
+
 export default {
   name: 'bought',
   mounted(){
+    //页面加载时:
+    this.hasBoughtBooks(this.page,this.rows);
+    
     api.bookList().then(res=>{
       Toast(JSON.stringify(res))
     },error=>{
       Toast(JSON.stringify(error))
-      
     })
+
   },
   data () {
     return {
-      msg: '购物车'
+      msg: '购物车',
+      bookList:{
+        total:0,
+        rows:[],
+        pages:0
+      },
+      allLoaded:false,
+      page: 1,
+      rows: 10,
     }
   },
   route: {
@@ -60,7 +63,40 @@ export default {
    
   },
   methods: {
-    
+    /* 拿数据:获取已购图书 */
+    hasBoughtBooks(page,rows){
+      api.book.hasBoughtBooks(page,rows).then(res => {
+        if(res.success === true){
+          // console.log(res.rows);
+          //分页
+          if(page==1){
+              this.bookList = res;// 第一次加载时直接赋值,之后就是添加了
+          }else{
+            for(let i=0 ; i < res.rows.length ; i++){
+              this.bookList.rows.push(res.rows[i])
+            }
+          }
+        } else{
+          alert(res.msg);
+        }
+      }, err => {
+        console.log(err);
+      })
+    },
+    /* 分页之刷新 */
+    loadTop() {
+      
+      this.$refs.loadmore.onTopLoaded();
+    },
+    /* 分页下拉加载事件 */
+    loadBottom() {
+        if(this.page>=this.bookList.pages){
+            this.allLoaded = true;// 当前页大于等于最大页数时,不再下拉刷新
+        } else {
+            this.hasBoughtBooks(++this.page,this.rows);
+        } 
+      this.$refs.loadmore.onBottomLoaded();
+    }
   }
 
 }
