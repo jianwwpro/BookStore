@@ -25,13 +25,17 @@ export default {
     })
   },
   mounted(){//生命周期中的mounted阶段
+  
     let url = window.location.href
     if(url.indexOf('?')>0){
-      window.location.href=window.location.href.split('?')[0]
+      window.location.href=window.location.href.split('?')[0]+"#"+window.location.href.split("#")[1]
+    }
+    else {
+      this.scanBook().then(res=>{
+        this.addBookCart(res.split(',')[1]);
+      });
     }
 
-    // this.scanBook();
-    // this.addBookCart(9787030181558);
   },
   
   data () {//controller 数据request.setAttrbute('msg','彩云书店');request.setAttrbute('msg','彩云书店')
@@ -52,6 +56,7 @@ export default {
    
   },
   methods: {
+    
     //添加图书至购物车
     addBookCart(isbn){
       //页面提示圈
@@ -73,14 +78,13 @@ export default {
     },
 
     openBarcode(){
-
         return new Promise((resolve,reject)=>{
           wx.config(this.config)
           wx.ready(()=>{
             wx.scanQRCode({
               needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
               scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-              success: res=>{
+              success: function(res){
                 var msg = res.resultStr // 当needResult 为 1 时，扫码返回的结果
                 resolve(msg)
               }
@@ -96,37 +100,32 @@ export default {
       },
       //扫码购书
       scanBook(){
-        // let sessionid = localStorage.getItem('sessionid')
-        //  if(sessionid==null||sessionid==''){
-        //    this.$router.push('Login')
-        //    return
-        // }
-        console.log(this.config)
+       return new Promise((resolve,reject)=>{
         if(this.config==null){
           Indicator.open({
             text: '加载中...',
             spinnerType: 'fading-circle'
           });
-          console.log('xxx1')
           this.$store.dispatch('save').then(res=>{
               Indicator.close()
-              console.log('xxx')
               this.openBarcode().then(isbn=>{
-                Toast("微信不存在"+"\t处理ISBN："+isbn)
-              },er=>{
-                Toast(er)
+                resolve(isbn)
+              },error=>{
+                reject(error)
               })
             },err=>{
+              reject(err)
               console.log(err)
             })
       }else {
-          this.openBarcode().then(isbn=>{
-            Toast("微信存在:"+this.config.appId+"\t处理ISBN："+isbn)
-          },er=>{
-            Toast(er)
-          })
+        
+            this.openBarcode().then(res=>{
+                resolve(res)
+              },error=>{
+                reject(error)
+              })
         }
-
+       })
       }
   }
 
