@@ -32,8 +32,7 @@ export default {
     }
     else {
       this.scanBook().then(res=>{
-        
-        this.addBookCart(res.resultStr.split(',')[1]);
+        this.addBookCart(res.split(',')[1]);
       });
     }
 
@@ -68,6 +67,7 @@ export default {
           alert(res.msg);
         }
       },err => {
+        Toast(err)
         console.log(err);
       })
     },
