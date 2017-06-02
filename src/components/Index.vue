@@ -38,6 +38,7 @@
        <p>7、<router-link class="link" to="/Bought">什么鬼</router-link></p>
        
      </div>
+     <mt-button type="primary" size="large" @click='logout'>退出登录</mt-button>
   </div>
 </template>
 
@@ -45,7 +46,7 @@
 import { Header,Indicator,Toast } from 'mint-ui' 
 import wx from 'weixin-js-sdk'
 import { mapGetters } from 'vuex'
-
+import api from '../api/Api'
 export default {
   name: 'index',
   
@@ -67,7 +68,25 @@ export default {
   methods: {
     back(){
       this.$router.go(-1)
-    }
+    },
+    logout(){
+         Indicator.open({
+          text: '登录中...',
+          spinnerType: 'fading-circle'
+          });
+        api.user.logout().then(res=>{
+         
+          Indicator.close()
+           let redirect = this.$route.query.redirect || '/'
+            console.log("qyert="+redirect)
+           
+            this.$router.push({ 
+            name: 'Login', 
+          });
+        }, err=>{
+              Indicator.close()
+        })
+      }
   }
 
 }
