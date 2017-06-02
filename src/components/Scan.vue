@@ -1,5 +1,10 @@
 <template>
   <div class="scan">
+    <mt-header fixed title="扫码购书">
+      <router-link to="/" slot="left">
+        <mt-button icon="back"></mt-button>
+      </router-link>
+    </mt-header>
      <div>返回首页</div>
      <div>在扫一本</div>
      <div>去购物车</div>
@@ -31,6 +36,7 @@ export default {
         this.addBookCart(res.resultStr.split(',')[1]);
       });
     }
+
   },
   
   data () {//controller 数据request.setAttrbute('msg','彩云书店');request.setAttrbute('msg','彩云书店')
