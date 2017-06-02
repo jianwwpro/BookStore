@@ -28,7 +28,7 @@
   </div>
 </template>
 <script>
-import { Header ,Loadmore} from 'mint-ui' 
+import { Header ,Loadmore ,Indicator} from 'mint-ui' 
 import api from '../api/Api'
 
 export default {
@@ -117,7 +117,13 @@ export default {
 
     // 查询购物车
     queryBook(page,rows){
-     api.cart.queryBook(page,rows).then(res => {
+      //页面提示圈
+      Indicator.open({
+        text: '请稍后...',
+        spinnerType: 'fading-circle'
+      });
+      api.cart.queryBook(page,rows).then(res => {
+        Indicator.close();//关闭页面提示圈
         if(res.success === true){
           //分页处理
           if(page==1){
@@ -131,6 +137,7 @@ export default {
           alert(res.msg);
         }
       }, err => {
+        Indicator.close();//关闭页面提示圈
         console.log(err);
       })
     },

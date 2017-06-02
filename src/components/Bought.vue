@@ -25,7 +25,7 @@
   </div>
 </template>
 <script>
-import { Header,Toast,Loadmore } from 'mint-ui' 
+import { Header,Toast,Loadmore,Indicator } from 'mint-ui' 
 import api from '../api/Api'
 
 export default {
@@ -65,7 +65,12 @@ export default {
   methods: {
     /* 拿数据:获取已购图书 */
     hasBoughtBooks(page,rows){
+      Indicator.open({
+        text: '请稍后...',
+        spinnerType: 'fading-circle'
+      });
       api.book.hasBoughtBooks(page,rows).then(res => {
+        Indicator.close();//关闭页面提示圈
         if(res.success === true){
           // console.log(res.rows);
           //分页
@@ -80,6 +85,7 @@ export default {
           alert(res.msg);
         }
       }, err => {
+        Indicator.close();//关闭页面提示圈
         console.log(err);
       })
     },

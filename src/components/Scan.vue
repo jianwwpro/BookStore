@@ -30,7 +30,7 @@ export default {
       window.location.href=window.location.href.split('?')[0]
     }
 
-    this.scanBook();
+    // this.scanBook();
     // this.addBookCart(9787030181558);
   },
   
@@ -54,13 +54,20 @@ export default {
   methods: {
     //添加图书至购物车
     addBookCart(isbn){
+      //页面提示圈
+      Indicator.open({
+        text: '请稍后...',
+        spinnerType: 'fading-circle'
+      });
       api.cart.addBook(isbn).then(res => {
+        Indicator.close();//关闭页面提示圈
         if(res.success == true){
           alert("添加成功");
         } else{
           alert(res.msg);
         }
       },err => {
+        Indicator.close();//关闭页面提示圈
         console.log(err);
       })
     },
