@@ -27,12 +27,12 @@ export default {
           })
         })
     },
-    bookStoreList(page,rows){
+    bookStoreList(page,rows,res){
       return new Promise((resolve,reject)=>{
         //console.log('eeee')
         /*resolve([{id:1,name:'xxx',logo:''},{id:2,name:'xxx',logo:''},{id:3,name:'xxx',logo:''},{id:4,name:'xxx',logo:''}])*/
         let library_id  = 6
-        let lng_lat = "116.5995,39.9067"
+        let lng_lat = res.lng+","+res.lat
         Vue.http.get(API_URL+'/bookStore/store/bookStoreList?lng_lat='+lng_lat+'&page='+page+'&rows='+rows,{
           credentials:true
         }).then(res=>{

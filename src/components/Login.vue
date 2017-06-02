@@ -39,9 +39,10 @@
             console.log('登录成功1')
             console.log(res.sessionId)
             localStorage.setItem('sessionid', res.sessionId)
-            this.$router.push({ 
-               name: 'Index'
-            });
+            let redirect = this.$route.query.redirect || '/'
+            console.log("qyert="+redirect)
+           
+            this.$router.push(redirect);
 
 
           }else{
