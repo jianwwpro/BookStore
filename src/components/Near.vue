@@ -142,8 +142,8 @@ export default {
   },
   mounted(){
     this.openLocation().then(res=>{
-      //alert(JSON.stringfy(res))
-      console.log("经纬度信息"+res)
+      alert(JSON.stringfy(res))
+      //console.log("经纬度信息"+res)
     },error=>{
 
     })
