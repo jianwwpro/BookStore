@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
 // const  API_URL= 'http://i.brainhunt.cn/caiyunboss-interface/'
-const  API_URL= 'http://localhost:8081/caiyunboss-interface/'
+const  API_URL= 'http://localhost:8080/caiyunboss-interface/'
 
 export default {
   wx:{
@@ -93,13 +93,13 @@ export default {
           console.log("执行api中logout方法")
       return new Promise((resolve,reject)=>{
         Vue.http.post(
-            API_URL+'/bookStore/logOut',
+            API_URL+'/bookStore/logOut',{},
           {
             credentials: true
           }
           ).then(res=>{
             console.log("执行logout成功")
-          let sessionid =   localStorage.getItem('sessionid');
+          let sessionid =   localStorage.removeItem('sessionid');
           console.log(sessionid)
             /*localStorage.setItem('sessionid',res.body.sessionId)*/
             resolve(res.body)
