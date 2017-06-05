@@ -99,7 +99,8 @@ export default {
           }
           ).then(res=>{
             console.log("执行logout成功")
-          let sessionid =   localStorage.removeItem('sessionid');
+          localStorage.removeItem('sessionid');
+          let sessionid = localStorage.getItem('sessionid');
           console.log(sessionid)
             /*localStorage.setItem('sessionid',res.body.sessionId)*/
             resolve(res.body)
