@@ -43,13 +43,12 @@
             //console.log("qyert="+redirect)
            
             this.$router.push(redirect);
-
+            console.log(res.message)
 
           }else{
             Indicator.close()
             Toast({
-              message: '登录失败',
-              iconClass: 'icon icon-success'
+              message: res.message,
             });
           }
         }, err=>{
