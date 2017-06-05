@@ -36,11 +36,11 @@
          
           Indicator.close()
           if(res.success==true){
-            console.log('登录成功1')
-            console.log(res.sessionId)
+            //console.log('登录成功1')
+           // console.log(res.sessionId)
             localStorage.setItem('sessionid', res.sessionId)
             let redirect = this.$route.query.redirect || '/'
-            console.log("qyert="+redirect)
+            //console.log("qyert="+redirect)
            
             this.$router.push(redirect);
 

@@ -36,7 +36,7 @@
        <p>5、待店员确认完成后，界面出现结算完成标识，这时您就可以将图书带走了。</p>
        <p>6、请不要忘记在图书到期前归还到图书馆。</p>
      </div>
-     <mt-button type="primary" size="large" @click='logout'>退出登录</mt-button>
+     <mt-button type="primary" size="large" v-if="success" @click='logout'>退出登录</mt-button>
   </div>
 </template>
 
@@ -51,7 +51,9 @@ export default {
   
   data () {//controller 数据request.setAttrbute('msg','彩云书店');request.setAttrbute('msg','彩云书店')
     return {
-     
+     msg:'',
+     success:true,
+     sessionid:''
     }
   },
   route: {
@@ -69,22 +71,37 @@ export default {
     },
     logout(){
          Indicator.open({
-          text: '登录中...',
+          text: '退出登录...',
           spinnerType: 'fading-circle'
           });
         api.user.logout().then(res=>{
-         
+          
           Indicator.close()
-           let redirect = this.$route.query.redirect || '/'
-            console.log("qyert="+redirect)
-           
-            this.$router.push({ 
+          let redirect = this.$route.query.redirect || '/'
+            //console.log("qyert="+redirect)
+          if (res.success==true) {
+           localStorage.removeItem('sessionid');
+          }
+          this.$router.push({ 
             name: 'Login', 
           });
+          Toast({
+              message: '退出登录成功..请重新登录',
+            });
         }, err=>{
               Indicator.close()
+              Toast({
+              message: '退出失败...请检查您的网络',
+            });
         })
       }
+  },
+  mounted(){
+     if (localStorage.getItem('sessionid')==null) {
+              this.success=false;
+          }
+    
+    
   }
 
 }

@@ -90,7 +90,7 @@ export default {
       })
     },
     logout(){
-          console.log("执行api中logout方法")
+          //console.log("执行api中logout方法")
       return new Promise((resolve,reject)=>{
         Vue.http.post(
             API_URL+'/bookStore/logOut',{},
@@ -98,10 +98,7 @@ export default {
             credentials: true
           }
           ).then(res=>{
-            console.log("执行logout成功")
-          localStorage.removeItem('sessionid');
-          let sessionid = localStorage.getItem('sessionid');
-          console.log(sessionid)
+           // console.log("执行logout成功")
             /*localStorage.setItem('sessionid',res.body.sessionId)*/
             resolve(res.body)
           },error=>{
