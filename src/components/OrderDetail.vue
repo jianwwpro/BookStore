@@ -1,7 +1,11 @@
 <template>
   <div class="cart">
-    <div> 订单结算</div>
-    <div> ------------------------------------</div>
+    <mt-header fixed title="订单结算">
+      <router-link to="/" slot="left">
+        <mt-button icon="back" @click='back'></mt-button>
+      </router-link>
+    </mt-header>
+
     <canvas id="barcode"></canvas>
     <canvas id="qrCode"></canvas>
     <div> ------已选择({{bookList.length}})本----------------------</div> 
@@ -66,6 +70,9 @@ export default {
   },
   // 方法
   methods: {
+    back(){
+      this.$router.go(-1)
+    },
     // 取订单详情
     orderDetail(orderNum){
       api.order.orderDetail(orderNum).then(res => {

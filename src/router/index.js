@@ -5,9 +5,9 @@ import Cart from '@/components/Cart'
 import Near from '@/components/Near'
 import Bought from '@/components/Bought'
 import Login from '@/components/Login'
-
 import Scan from '@/components/Scan'
 import OrderDetail from '@/components/OrderDetail'
+import MyOrder from '@/components/MyOrder'
 
 
 Vue.use(Router)
@@ -41,27 +41,32 @@ let router = new Router({
       component: Bought,
       meta: { requiresAuth: true }
     },
-    //登录
+    // 登录
     {
       path: '/Login',
       name: 'Login',
       component: Login
-
-
     }, 
-    //扫码购书
+    // 扫码购书
     {
       path: '/Scan',
       name: 'Scan',
       component: Scan,
       meta: { requiresAuth: true }
     },
+    // 我的订单
+    {
+      path: '/MyOrder',
+      name: 'MyOrder',
+      component: MyOrder
+    }, 
+    // 订单详情
     {
       path: '/OrderDetail/:orderNum',
       name: 'OrderDetail',
       component: OrderDetail,
       meta: { requiresAuth: true }
-    },
+    }, 
     {
       path: '/Index',
       name: 'Index',

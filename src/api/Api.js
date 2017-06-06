@@ -100,7 +100,6 @@ export default {
     }
 
   },
-
   
   cart:{
     // 查询购物车内容
@@ -122,10 +121,6 @@ export default {
         })
       })
     },
-
-
-
-
     // 扫码添加购物车
     addBook(isbn){
       return new Promise((resolve,reject) => {
@@ -197,6 +192,25 @@ export default {
         ).then( res =>{
           resolve(res.body);
         }, error => {
+          reject(error);
+        })
+      })
+    },
+    // 用户订单
+    myOrder(page,rows){
+      return new Promise((resolve,reject) => {
+        Vue.http.post(
+          API_URL+"bookStore/order/myOrder",
+          {
+            page:page,
+            rows:rows
+          },
+          {
+            credentials: true
+          }
+        ).then( res =>{
+          resolve(res.body);
+        }, error =>{
           reject(error);
         })
       })

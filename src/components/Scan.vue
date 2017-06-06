@@ -1,13 +1,29 @@
 <template>
-  <div class="scan">
+  <div class="index">
     <mt-header fixed title="扫码购书">
       <router-link to="/" slot="left">
-        <mt-button icon="back"></mt-button>
+        <mt-button icon="back" @click='back'></mt-button>
       </router-link>
     </mt-header>
-     <div>返回首页</div>
-     <div>在扫一本</div>
-     <div>去购物车</div>
+     <ul>
+       <li>
+          <router-link class="link" to="/Index">
+            <img src="../assets/patener.png" alt="">
+            返回首页
+          </router-link>
+        </li>
+       <li @click="scanAddBook()">
+          <img src="../assets/QRcode.png" alt="">
+          <a>在扫一本</a>
+       </li>
+       <li>
+         <router-link class="link" to="/Cart">
+            <img src="../assets/buied.png" alt="">
+            去购物车
+         </router-link>
+       </li>
+     </ul>
+
   </div>
 </template>
 
@@ -31,9 +47,10 @@ export default {
       window.location.href=window.location.href.split('?')[0]+"#"+window.location.href.split("#")[1]
     }
     else {
-      this.scanBook().then(res=>{
-        this.addBookCart(res.split(',')[1]);
-      });
+      this.scanAddBook();//扫码并添加购物车
+      // this.scanBook().then(res=>{
+      //   this.addBookCart(res.split(',')[1]);
+      // });
     }
 
   },
@@ -56,7 +73,16 @@ export default {
    
   },
   methods: {
-    
+    back(){
+      this.$router.go(-1)
+    },
+    //扫码并添加购物车
+    scanAddBook(){
+      this.scanBook().then(res=>{
+        this.addBookCart(res.split(',')[1]);
+      });
+    },
+
     //添加图书至购物车
     addBookCart(isbn){
       //页面提示圈

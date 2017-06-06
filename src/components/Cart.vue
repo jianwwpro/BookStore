@@ -2,7 +2,7 @@
   <div class="cart">
     <mt-header fixed title="购物车">
       <router-link to="/" slot="left">
-        <mt-button icon="back"></mt-button>
+        <mt-button icon="back" @click='back'></mt-button>
       </router-link>
     </mt-header>
 
@@ -41,7 +41,7 @@ export default {
     return {
       checkAll: false,
       msg: '购物车',
-       bookList:{
+      bookList:{
         total:0,
         rows:[],
         pages:0
@@ -60,6 +60,9 @@ export default {
    
   },
   methods: {
+    back(){
+      this.$router.go(-1)
+    },
     // 购物车提交订单
     submitCart(){
       //获取购物车里勾选的图书

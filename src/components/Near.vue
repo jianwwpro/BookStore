@@ -2,7 +2,7 @@
   <div class="near">
     <mt-header fixed title="附近书店">
       <router-link to="/" slot="left">
-        <mt-button icon="back"></mt-button>
+        <mt-button icon="back" @click='back'></mt-button>
       </router-link>
     </mt-header>
 
@@ -69,8 +69,10 @@ export default {
   components: {
    
   },
-  methods: 
-  {
+  methods: {
+    back(){
+      this.$router.go(-1)
+    },
     getLocation(){
       return new Promise((resolve,reject)=>{
        wx.config(this.config)

@@ -28,14 +28,15 @@
        </li>
      </ul>
      <div class="text_content">
-       <div class="book_content"><b>购书简介</b></div>
+      <div class="book_content"><b>购书简介</b></div>
        <p>1、“你阅读，我买单”是XXX图书馆推出想一项惠民服务，旨在。。</p>
        <p>2、需要您持有XXX图书馆的读者卡，并完成注册绑定。</p>
        <p>3、到达指定书店后，请打开本页面，点击“扫码购书”扫描图书本面的条形码。</p>
        <p>4、选购完成后，点击结算，将结算页面展示给店员，配合店员完成扫码确认工作。</p>
        <p>5、待店员确认完成后，界面出现结算完成标识，这时您就可以将图书带走了。</p>
        <p>6、请不要忘记在图书到期前归还到图书馆。</p>
-     </div>
+      </div>
+      <router-link to="/MyOrder">我的订单</router-link>
   </div>
 </template>
 

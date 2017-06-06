@@ -2,7 +2,7 @@
   <div class="bought">
     <mt-header fixed title="已购图书">
       <router-link to="/" slot="left">
-        <mt-button icon="back"></mt-button>
+        <mt-button icon="back" @click='back'></mt-button>
       </router-link>
     </mt-header>
     <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
@@ -34,11 +34,11 @@ export default {
     //页面加载时:
     this.hasBoughtBooks(this.page,this.rows);
     
-    api.bookList().then(res=>{
+   /* api.bookList().then(res=>{
       Toast(JSON.stringify(res))
     },error=>{
       Toast(JSON.stringify(error))
-    })
+    })*/
 
   },
   data () {
@@ -63,6 +63,9 @@ export default {
    
   },
   methods: {
+    back(){
+      this.$router.go(-1)
+    },
     /* 拿数据:获取已购图书 */
     hasBoughtBooks(page,rows){
       Indicator.open({
