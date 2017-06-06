@@ -89,6 +89,23 @@ export default {
           })
       })
     },
+    logout(){
+          //console.log("执行api中logout方法")
+      return new Promise((resolve,reject)=>{
+        Vue.http.post(
+            API_URL+'/bookStore/logOut',{},
+          {
+            credentials: true
+          }
+          ).then(res=>{
+           // console.log("执行logout成功")
+            /*localStorage.setItem('sessionid',res.body.sessionId)*/
+            resolve(res.body)
+          },error=>{
+            reject(error)
+          })
+      })
+    },
     userInfo(){
       return new Promise((resolve,reject)=>{
         Vue.http.get('url?a=xx&b=x',{credentials: true}).then(res=>{

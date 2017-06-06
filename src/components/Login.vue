@@ -1,6 +1,10 @@
 <template>
   <div class="login">
-    <mt-header fixed title="彩云书店"> </mt-header>
+    <mt-header fixed title="彩云书店"> 
+      <router-link to="/" slot="left">
+      <mt-button icon="back" @click='back'></mt-button>
+    </router-link>
+    </mt-header>
     <mt-field label="用户名:" placeholder="请输入用户名" v-model="username"></mt-field>
     <mt-field label="密码   :" placeholder="密码" type="password" v-model="password"></mt-field>
     <mt-button type="primary" size="large" @click='login'>登录</mt-button>
@@ -27,6 +31,9 @@
       }
     },
     methods:{
+      back(){
+        this.$router.go(-1)
+      },
       login(){
          Indicator.open({
           text: '登录中...',
@@ -36,20 +43,19 @@
          
           Indicator.close()
           if(res.success==true){
-            console.log('登录成功1')
-            console.log(res.sessionId)
+            //console.log('登录成功1')
+           // console.log(res.sessionId)
             localStorage.setItem('sessionid', res.sessionId)
             let redirect = this.$route.query.redirect || '/'
-            console.log("qyert="+redirect)
+            //console.log("qyert="+redirect)
            
             this.$router.push(redirect);
-
+            console.log(res.message)
 
           }else{
             Indicator.close()
             Toast({
-              message: '登录失败',
-              iconClass: 'icon icon-success'
+              message: res.message,
             });
           }
         }, err=>{

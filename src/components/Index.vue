@@ -36,7 +36,10 @@
        <p>5、待店员确认完成后，界面出现结算完成标识，这时您就可以将图书带走了。</p>
        <p>6、请不要忘记在图书到期前归还到图书馆。</p>
       </div>
-      <router-link to="/MyOrder">我的订单</router-link>
+      <router-link to="/MyOrder">
+        <mt-button type="primary" size="large">我的订单</mt-button>
+      </router-link>
+      <mt-button type="primary" size="large" v-if="success" @click='logout'>退出登录</mt-button>
   </div>
 </template>
 
@@ -44,14 +47,16 @@
 import { Header,Indicator,Toast } from 'mint-ui' 
 import wx from 'weixin-js-sdk'
 import { mapGetters } from 'vuex'
-
+import api from '../api/Api'
 export default {
   name: 'index',
   
   
   data () {//controller 数据request.setAttrbute('msg','彩云书店');request.setAttrbute('msg','彩云书店')
     return {
-     
+     msg:'',
+     success:true,
+     sessionid:''
     }
   },
   route: {
@@ -66,7 +71,40 @@ export default {
   methods: {
     back(){
       this.$router.go(-1)
-    }
+    },
+    logout(){
+         Indicator.open({
+          text: '退出登录...',
+          spinnerType: 'fading-circle'
+          });
+        api.user.logout().then(res=>{
+          
+          Indicator.close()
+          let redirect = this.$route.query.redirect || '/'
+            //console.log("qyert="+redirect)
+          if (res.success==true) {
+           localStorage.removeItem('sessionid');
+          }
+          this.$router.push({ 
+            name: 'Login', 
+          });
+          Toast({
+              message: '退出登录成功..请重新登录',
+            });
+        }, err=>{
+              Indicator.close()
+              Toast({
+              message: '退出失败...请检查您的网络',
+            });
+        })
+      }
+  },
+  mounted(){
+     if (localStorage.getItem('sessionid')==null) {
+              this.success=false;
+          }
+    
+    
   }
 
 }
