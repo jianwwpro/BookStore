@@ -67,7 +67,7 @@ export default {
     submitCart(){
       //获取购物车里勾选的图书
       var selectedBookList = [];
-      this.bookList.map(({ booksId, checked }) => {
+      this.bookList.rows.map(({ booksId, checked }) => {
         if(checked != null && checked){
           selectedBookList.push(booksId);
         }
@@ -101,13 +101,13 @@ export default {
         // 删除购物车时,删除页面上相应的内容
         if(res.success === true){
           let index = -1;
-          for(let i=0;i<this.bookList.length;i++){
-            if(this.bookList[i].id===cartId){
+          for(let i=0;i<this.bookList.rows.length;i++){
+            if(this.bookList.rows[i].id===cartId){
               index=i;
             }
           }
           if(index>-1){
-            this.bookList.splice(index,1)
+            this.bookList.rows.splice(index,1)
           }
           
         } else{
@@ -160,8 +160,8 @@ export default {
   watch: {
     'checkAll': { //全选事件
       handler: function (val) { // val新值
-        for( var i = 0 ; i < this.bookList.length ; i++ ){
-          var book = this.bookList[i];
+        for( var i = 0 ; i < this.bookList.rows.length ; i++ ){
+          var book = this.bookList.rows[i];
           book.checked = val;
         }
       }
