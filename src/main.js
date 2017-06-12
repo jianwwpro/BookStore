@@ -24,3 +24,15 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
+Vue.http.interceptors.push(function(request, next) {
+  const sessionId = localStorage.getItem('sessionid');
+  if(sessionId&& !request.params['sessionId']){
+      request.params['sessionId']=sessionId;
+  }
+  
+  next(response=>{
+    if(response.body.code&&response.body.code==403){
+      
+    }
+  });
+});
