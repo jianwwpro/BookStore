@@ -2,7 +2,7 @@
   <div class="login">
     <mt-header fixed title="彩云书店"> 
       <router-link to="/" slot="left">
-      <mt-button icon="back" @click='back'></mt-button>
+      <mt-button icon="back" ></mt-button>
     </router-link>
     </mt-header>
     <mt-field label="用户名:" placeholder="请输入用户名" v-model="username"></mt-field>

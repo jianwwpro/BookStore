@@ -2,7 +2,7 @@
   <div class="bought">
     <mt-header fixed title="已购图书">
       <router-link to="/" slot="left">
-        <mt-button icon="back" @click='back'></mt-button>
+        <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
     <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
