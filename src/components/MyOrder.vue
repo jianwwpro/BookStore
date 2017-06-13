@@ -2,7 +2,7 @@
   <div class="cart">
     <mt-header fixed title="我的订单">
       <router-link to="/" slot="left">
-        <mt-button icon="back" @click='back'></mt-button>
+        <mt-button icon="back" ></mt-button>
       </router-link>
     </mt-header>
 

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
-// const  API_URL= 'http://i.brainhunt.cn/caiyunboss-interface/'
-const  API_URL= 'http://localhost:8081/caiyunboss-interface/'
+ //const  API_URL= 'http://i.brainhunt.cn/caiyunboss-interface/'
+const  API_URL= 'http://localhost:8080/caiyunboss-interface/'
 
 export default {
   wx:{
@@ -152,8 +152,9 @@ export default {
             credentials: true
           }
         ).then( res => {
-          resolve(res.body);
+            resolve(res.body);
         }, error => {
+         
           reject(error);
         })
       })

@@ -2,7 +2,7 @@
   <div class="index">
       <mt-header fixed title="彩云书店">
         <router-link to="/" slot="left">
-          <mt-button icon="back"  @click='back'></mt-button>
+          <mt-button icon="back"  ></mt-button>
         </router-link>
         <router-link class="buycar" to="/Cart" slot="right">
         </router-link>

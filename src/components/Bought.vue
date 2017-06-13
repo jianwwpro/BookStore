@@ -2,7 +2,7 @@
   <div class="bought">
     <mt-header fixed title="已购图书">
       <router-link to="/" slot="left">
-        <mt-button icon="back" @click='back'></mt-button>
+        <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
     <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
@@ -63,9 +63,7 @@ export default {
    
   },
   methods: {
-    back(){
-      this.$router.go(-1)
-    },
+   
     /* 拿数据:获取已购图书 */
     hasBoughtBooks(page,rows){
       Indicator.open({
@@ -73,7 +71,9 @@ export default {
         spinnerType: 'fading-circle'
       });
       api.book.hasBoughtBooks(page,rows).then(res => {
+       
         Indicator.close();//关闭页面提示圈
+         if(!res){return;}
         if(res.success === true){
           // console.log(res.rows);
           //分页
