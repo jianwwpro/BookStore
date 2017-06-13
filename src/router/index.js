@@ -8,6 +8,7 @@ import Login from '@/components/Login'
 import Scan from '@/components/Scan'
 import OrderDetail from '@/components/OrderDetail'
 import MyOrder from '@/components/MyOrder'
+import TiedCard from '@/components/TiedCard'
 
 
 Vue.use(Router)
@@ -66,6 +67,12 @@ let router = new Router({
       name: 'OrderDetail',
       component: OrderDetail,
       meta: { requiresAuth: true }
+    }, 
+    // 绑卡页面
+    {
+      path: '/TiedCard',
+      name: 'TiedCard',
+      component: TiedCard
     }, 
     {
       path: '/Index',

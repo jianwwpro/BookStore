@@ -39,6 +39,9 @@
       <router-link to="/MyOrder">
         <mt-button type="primary" size="large">我的订单</mt-button>
       </router-link>
+      <router-link to="/TiedCard">
+        <mt-button type="primary" size="large">绑卡页面</mt-button>
+      </router-link>
       <mt-button type="primary" size="large" v-if="success" @click='logout'>退出登录</mt-button>
   </div>
 </template>

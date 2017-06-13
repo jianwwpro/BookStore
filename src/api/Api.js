@@ -114,6 +114,26 @@ export default {
             reject(err)
           })
       })
+    },
+    // 绑卡
+    bindCard(librayId, cardNum, passWord){
+      return new Promise((resolve,reject) => {
+        Vue.http.post(
+          API_URL+"card/bindCardByStore",
+          {
+            librayId : librayId,
+            cardNum : cardNum,
+            passWord : passWord
+          },
+          {
+            credentials: true
+          }
+        ).then( res =>{
+          resolve(res.body);
+        }, error =>{
+          reject(error);
+        })
+      })
     }
 
   },
@@ -233,10 +253,28 @@ export default {
       })
     }
 
-  }
+  },
+  library:{
+    // 获取图书馆集合
+    libraryListByStore(){
+      return new Promise((resolve,reject) => {
+        Vue.http.post(
+          API_URL+"library/libraryListByStore",
+          {
+          },
+          {
+            credentials: true
+          }
+        ).then( res =>{
+          resolve(res.body);
+        }, error =>{
+          reject(error);
+        })
+      })
+    }
 
+  },
+  
 
-
-    
 
 }
