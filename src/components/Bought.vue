@@ -63,9 +63,7 @@ export default {
    
   },
   methods: {
-    back(){
-      this.$router.go(-1)
-    },
+   
     /* 拿数据:获取已购图书 */
     hasBoughtBooks(page,rows){
       Indicator.open({
@@ -73,7 +71,9 @@ export default {
         spinnerType: 'fading-circle'
       });
       api.book.hasBoughtBooks(page,rows).then(res => {
+       
         Indicator.close();//关闭页面提示圈
+         if(!res){return;}
         if(res.success === true){
           // console.log(res.rows);
           //分页
