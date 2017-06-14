@@ -19,54 +19,55 @@ Vue.http.get.options = { withCredentials: true }
 /* eslint-disable no-new */
 
 
-
+/** 拦截器:拦截所有request */
 Vue.http.interceptors.push(function(request, next) {
+  /* 在所有的请求url上添加上sessionId */
   const sessionId = localStorage.getItem('sessionid');
   if(sessionId&& !request.params['sessionId']){
       request.params['sessionId']=sessionId;
   }
- 
+  /* 返回 */
   next(response=>{
-    console.log(response)
-    var str = response.bodyText;
-    console.log(str)
-    var obj = eval('(' + str + ')');
-    console.log(obj)
+    var str = response.bodyText;// 返回值,
+    var obj = eval('(' + str + ')');// 返回值转json
     if(obj.interface && obj.interface==1){
-    console.log('eeeeeeeeee')
       let newSession = obj.sessionid;
-      console.log(newSession)
-      console.log(obj.code)
       if(obj.code==403){
         console.log(403)
-        //重新登录,系统异常 跳转到登录页面
-            router.push({ 
-              name: 'Login', 
-            });
-      
+        // 重新登录,系统异常 跳转到登录页面
+        router.push({ 
+          name: 'Login', 
+        });
       }
       else if(obj.code==100){
-        console.log(100)
-        console.log(obj.redirect)
+        // 欢迎再次使用
         localStorage.setItem('sessionid',newSession);
+        // 是否绑卡?
+        if (!obj.cardNo && obj.cardNo === false) {
+          // 去绑卡
+          router.push({ 
+            name: 'TiedCard', 
+          });
+          return;
+        }
         window.location.reload();
         
-        
       }else if(obj.code==500){
-                console.log(500)
-        
-            router.push({ 
-              name: 'Login', 
-            });
-          
+        // 系统出现异常
+        router.push({ 
+          name: 'Login', 
+        });
       }
     }
-   console.log('aaa')
+
+    // 是否绑卡?
+    if (!obj.cardNo && obj.cardNo === false) {
+      // 去绑卡
+      router.push({ 
+        name: 'TiedCard', 
+      });
+    }
    
-    /*console.log(response)
-    if (!response.ok) {
-      console.log(response.ok)
-    }*/
   });
 });
 

@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <mt-header fixed title="彩云书店"> 
+    <mt-header fixed title="用户绑卡"> 
       <router-link to="/" slot="left">
        <mt-button icon="back" @click='back'></mt-button>
       </router-link>
@@ -37,6 +37,9 @@
         }
     },
     mounted(){
+      // 提示绑卡
+      Toast("未绑卡用户,请先绑卡 ");
+
       // 加载所有图书馆
       this.libraryListByStore().then(res => {
         this.selectDefault();// 回调选择用户默认图书馆
@@ -45,7 +48,7 @@
     },
     methods:{
       back(){
-        this.$router.go(-1)
+        this.$router.go(-1);
       },
       // 显示选择框
       showLibrary(){
@@ -104,13 +107,22 @@
       },
       // 绑定读者卡
       bindCard(){
-        api.user.bindCard(this.libraryId, this.cardNum, this.passWord).then(res => {
+        var libraryId = this.libraryId;
+        var cardNum = this.cardNum;
+        var passWord = this.passWord;
+        if(!libraryId || !cardNum || !passWord){
+          Toast("检查参数是否填写完整");// 弹框提示
+          return false;
+        }
+
+        api.user.bindCard(libraryId, cardNum, passWord).then(res => {
+
           Toast(res.msg);// 弹框提示
+          let that = this
           if(res.success === true){
-            // 绑定完成后去首页
-            this.$router.push({ 
-              name: 'Index'
-            })
+            setTimeout(function(){ 
+                that.$router.go(-1);
+              },1000);
           }
 
         }, err => {
