@@ -148,5 +148,15 @@
       display block
       float right
       width 2em
+  
+  
+</style>
+<style lang="stylus">
+.mint-actionsheet
+    height 100%
+  .mint-actionsheet-list
+    height calc(100% - 45px)
+    overflow auto
+    -webkit-overflow-scrolling touch
 
 </style>
