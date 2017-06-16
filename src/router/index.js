@@ -9,6 +9,8 @@ import Scan from '@/components/Scan'
 import OrderDetail from '@/components/OrderDetail'
 import MyOrder from '@/components/MyOrder'
 import TiedCard from '@/components/TiedCard'
+import Regist from '@/components/Regist'
+import ForgetPassword from '@/components/ForgetPassword'
 
 
 Vue.use(Router)
@@ -19,7 +21,20 @@ let router = new Router({
     {
       path: '/',
       name: 'Index',
-      component: Index
+      component: Index,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/Regist',
+      name: 'Regist',
+      component: Regist,
+      meta: { requiresAuth: false }
+    },
+    {
+      path: '/ForgetPassword',
+      name: 'ForgetPassword',
+      component: ForgetPassword,
+      meta: { requiresAuth: false }
     },
     //购物车
     {
@@ -83,13 +98,11 @@ let router = new Router({
 })
 
 router.beforeEach((to, from ,next)=>{
-
 if (to.matched.some(record => record.meta.requiresAuth)) {
     let sessionId = localStorage.getItem("sessionid")
-    console.log("sessionid:"+sessionId)
     if (!sessionId) {
       next({
-        path: '/Login',
+        name: 'Login',
         query: { redirect: to.fullPath }
       })
     } else {

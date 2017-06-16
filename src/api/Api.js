@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
  //const  API_URL= 'http://i.brainhunt.cn/caiyunboss-interface/'
-const  API_URL= 'http://localhost:8081/caiyunboss-interface/'
+const  API_URL= 'http://localhost:8080/caiyunboss-interface/'
 
 export default {
   wx:{
@@ -70,6 +70,42 @@ export default {
     }
   },
   user:{
+    findUsername(username){
+      return new Promise((resolve,reject)=>{
+          Vue.http.post(
+            API_URL+'/bookStore/findUsername',
+          {
+            username
+          },
+          {
+            credentials: true
+          }
+          ).then(res=>{
+            /*localStorage.setItem('sessionid',res.body.sessionId)*/
+            resolve(res.body)
+          },error=>{
+            reject(error)
+          })
+      })
+    },
+    getCode(username,type){
+      return new Promise((resolve,reject)=>{
+          Vue.http.post(
+            API_URL+'/bookStore/getCode',
+          {
+            username,type
+          },
+          {
+            credentials: true
+          }
+          ).then(res=>{
+            /*localStorage.setItem('sessionid',res.body.sessionId)*/
+            resolve(res.body)
+          },error=>{
+            reject(error)
+          })
+      })
+    },
     login(username,password){
        
       return new Promise((resolve,reject)=>{
@@ -77,6 +113,44 @@ export default {
             API_URL+'/bookStore/auth',
           {
             username,password
+          },
+          {
+            credentials: true
+          }
+          ).then(res=>{
+            /*localStorage.setItem('sessionid',res.body.sessionId)*/
+            resolve(res.body)
+          },error=>{
+            reject(error)
+          })
+      })
+    },
+    regist(username,password,smscode){
+       
+      return new Promise((resolve,reject)=>{
+          Vue.http.post(
+            API_URL+'/bookStore/regist',
+          {
+            username,password,smscode
+          },
+          {
+            credentials: true
+          }
+          ).then(res=>{
+            /*localStorage.setItem('sessionid',res.body.sessionId)*/
+            resolve(res.body)
+          },error=>{
+            reject(error)
+          })
+      })
+    },
+    resetPassword(username,password,smscode){
+       
+      return new Promise((resolve,reject)=>{
+          Vue.http.post(
+            API_URL+'/bookStore/resetPassword',
+          {
+            username,password,smscode
           },
           {
             credentials: true
