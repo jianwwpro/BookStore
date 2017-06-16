@@ -35,6 +35,7 @@ Vue.http.interceptors.push(function(request, next) {
       if(obj.code==403){
         console.log(403)
         // 重新登录,系统异常 跳转到登录页面
+        localStorage.removeItem('sessionid')
         router.push({ 
           name: 'Login', 
         });
