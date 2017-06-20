@@ -9,6 +9,7 @@ import MintUI from 'mint-ui'
 import {currency} from './filter/currency'
 import { Toast } from 'mint-ui' 
 import store from './store'
+import './store/config'
 
 Vue.config.productionTip = false
 Vue.use(MintUI)

@@ -9,6 +9,7 @@ import Scan from '@/components/Scan'
 import OrderDetail from '@/components/OrderDetail'
 import MyOrder from '@/components/MyOrder'
 import TiedCard from '@/components/TiedCard'
+import LoginByWx from '@/components/LoginByWx'
 
 
 Vue.use(Router)
@@ -47,6 +48,12 @@ let router = new Router({
       path: '/Login',
       name: 'Login',
       component: Login
+    }, 
+    // 微信登录
+    {
+      path: '/LoginByWx',
+      name: 'LoginByWx',
+      component: LoginByWx
     }, 
     // 扫码购书
     {

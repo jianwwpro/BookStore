@@ -1,7 +1,8 @@
 import Vue from 'vue'
 
  //const  API_URL= 'http://i.brainhunt.cn/caiyunboss-interface/'
-const  API_URL= 'http://localhost:8081/caiyunboss-interface/'
+// const  API_URL= 'http://localhost:8081/caiyunboss-interface/'
+const  API_URL= 'http://54qn.51mypc.cn/caiyunboss-interface/'
 
 export default {
   wx:{
@@ -87,6 +88,24 @@ export default {
           },error=>{
             reject(error)
           })
+      })
+    },
+    loginByWx(code){
+      alert(code);
+      return new Promise((resolve,reject) => {
+        Vue.http.post(
+          API_URL+"weixin/openidByVue",
+          {
+            code
+          },
+          {
+            credentials: true
+          }
+        ).then( res =>{
+          resolve(res.body);
+        }, error =>{
+          reject(error);
+        })
       })
     },
     logout(){

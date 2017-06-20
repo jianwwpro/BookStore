@@ -12,7 +12,7 @@
     <mt-field label="读者卡号:" placeholder="请输入卡号" v-model="cardNum"></mt-field>
     <mt-field label="密码   :" placeholder="密码" type="password" v-model="passWord"></mt-field>
     <span>{{message}}</span>
-    <mt-button type="primary" size="large" @click='bindCard'>绑定</mt-button>
+    <mt-button type="primary" size="large"  @click='bindCard'>绑定</mt-button>
   </div>
 </template>
 

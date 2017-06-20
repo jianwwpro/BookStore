@@ -15,8 +15,9 @@
     <div class="div2">
       <input type="text">
     </div>-->
+      
+    <mt-button type="primary" size="large" @click='wx_login'>微信登录</mt-button>
   </div>
-
 </template>
 
 <script>
@@ -33,6 +34,9 @@
     methods:{
       back(){
         this.$router.go(-1)
+      },
+      wx_login(){
+        window.location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid='+wxAppid+'&redirect_uri=http%3a%2f%2f'+redirectUri+'%2f#%2fLoginByWx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
       },
       login(){
          Indicator.open({
