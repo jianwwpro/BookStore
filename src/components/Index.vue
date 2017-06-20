@@ -36,13 +36,13 @@
        <p>5、待店员确认完成后，界面出现结算完成标识，这时您就可以将图书带走了。</p>
        <p>6、请不要忘记在图书到期前归还到图书馆。</p>
       </div>
-      <router-link to="/MyOrder">
+    <!--  <router-link to="/MyOrder">
         <mt-button type="primary" size="large">我的订单</mt-button>
       </router-link>
       <router-link to="/TiedCard">
         <mt-button type="primary" size="large">绑卡页面</mt-button>
       </router-link>
-      <mt-button type="primary" size="large" v-if="success" @click='logout'>退出登录</mt-button>
+      <mt-button type="primary" size="large" v-if="success" @click='logout'>退出登录</mt-button>-->
   </div>
 </template>
 
@@ -51,6 +51,7 @@ import { Header,Indicator,Toast } from 'mint-ui'
 import wx from 'weixin-js-sdk'
 import { mapGetters } from 'vuex'
 import api from '../api/Api'
+import main from '../main'
 export default {
   name: 'index',
   
@@ -103,9 +104,7 @@ export default {
       }
   },
   mounted(){
-     if (localStorage.getItem('sessionid')==null) {
-              this.success=false;
-          }
+    
     
     
   }

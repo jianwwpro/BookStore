@@ -8,15 +8,9 @@
     <mt-field label="用户名:" placeholder="请输入用户名" v-model="username"></mt-field>
     <mt-field label="密码   :" placeholder="密码" type="password" v-model="password"></mt-field>
     <mt-button type="primary" size="large" @click='login'>登录</mt-button>
-    <!--<div class="div1">
-      <input type="text">
-    </div>
-
-    <div class="div2">
-      <input type="text">
-    </div>-->
-      
-    <mt-button type="primary" size="large" @click='wx_login'>微信登录</mt-button>
+    <router-link to="/ForgetPassword" >忘记密码?</router-link>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    <router-link to="/Regist" >没有账号?注册一个</router-link>
+   
   </div>
 </template>
 

@@ -107,7 +107,7 @@ export default {
           return this.getLocation()
         }
         //正式环境请注释
-        return new Promise((resolve,reject)=>{})
+        //return new Promise((resolve,reject)=>{})
      
       
     },
