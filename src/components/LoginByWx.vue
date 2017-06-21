@@ -36,13 +36,25 @@
           text: '登录中...',
           spinnerType: 'fading-circle'
         });
-        api.user.loginByWx(code,"?").then(res=>{
+        api.user.loginByWx(code).then(res=>{
           Indicator.close();
-
-          alert(res);
-          if(res.success==true){
-
-            console.log(res.message)
+          if(res.success===true){
+            var user = res.user;
+            if(res.phone == '0'){
+              /*用户还未绑定手机号,去绑定*/
+              this.$router.push({ 
+                  name: 'BindPhone', 
+                  params: { 
+                    openId : user.openId
+                  }
+              });
+            }else{
+              //登录成功 去首页
+              localStorage.setItem('sessionid', res.sessionid);
+              this.$router.push({ 
+                  name: 'Index', 
+              });
+            }
 
           }else{
             Indicator.close()

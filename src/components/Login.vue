@@ -10,6 +10,7 @@
     <mt-button type="primary" size="large" @click='login'>登录</mt-button>
     <router-link to="/ForgetPassword" >忘记密码?</router-link>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
     <router-link to="/Regist" >没有账号?注册一个</router-link>
+    <mt-button type="primary" size="large" @click='wx_login'>微信登录</mt-button>
    
   </div>
 </template>

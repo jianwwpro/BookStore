@@ -12,6 +12,7 @@ import TiedCard from '@/components/TiedCard'
 import LoginByWx from '@/components/LoginByWx'
 import Regist from '@/components/Regist'
 import ForgetPassword from '@/components/ForgetPassword'
+import BindPhone from '@/components/BindPhone'
 
 
 Vue.use(Router)
@@ -95,6 +96,12 @@ let router = new Router({
       path: '/TiedCard',
       name: 'TiedCard',
       component: TiedCard
+    }, 
+    // 绑电话页面
+    {
+      path: '/BindPhone',
+      name: 'BindPhone',
+      component: BindPhone
     }, 
     {
       path: '/Index',
