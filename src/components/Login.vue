@@ -31,7 +31,7 @@
         this.$router.go(-1)
       },
       wx_login(){
-        window.location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid='+wxAppid+'&redirect_uri=http%3a%2f%2f'+redirectUri+'%2f#%2fLoginByWx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
+        window.location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid='+wxAppid+'&redirect_uri=http%3a%2f%2f'+redirectUri+'%2f%23%2fLoginByWx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
       },
       login(){
          Indicator.open({
