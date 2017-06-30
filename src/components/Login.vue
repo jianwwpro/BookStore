@@ -2,16 +2,18 @@
   <div class="login">
     <mt-header fixed title="彩云书店"> 
       <router-link to="/" slot="left">
-      <mt-button icon="back" ></mt-button>
-    </router-link>
+        <mt-button icon="back" ></mt-button>
+      </router-link>
+      <router-link to="/Regist" slot="right">
+        <mt-button >注册</mt-button>
+      </router-link>
     </mt-header>
     <mt-field label="用户名:" placeholder="请输入用户名" v-model="username"></mt-field>
     <mt-field label="密码   :" placeholder="密码" type="password" v-model="password"></mt-field>
     <mt-button type="primary" size="large" @click='login'>登录</mt-button>
-    <router-link to="/ForgetPassword" >忘记密码?</router-link>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-    <router-link to="/Regist" >没有账号?注册一个</router-link>
-    <mt-button type="primary" size="large" @click='wx_login'>微信登录</mt-button>
-   
+    
+    <router-link class='forgetpassword' to="/ForgetPassword" >忘记密码?</router-link>
+    <a class='wxlogin' @click='wx_login' >微信登录</a>
   </div>
 </template>
 
@@ -79,5 +81,14 @@
       display block
       float right
       width 2em
+  .forgetpassword
+    float left
+    margin-left 10px
+    margin-top 20px
+  .wxlogin
+    float right
+    margin-right 10px
+    margin-top 20px
+  
 
 </style>
