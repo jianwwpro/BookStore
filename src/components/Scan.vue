@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { Header,Indicator,Toast } from 'mint-ui' 
+import { Header,Indicator,Toast,MessageBox  } from 'mint-ui' 
 import wx from 'weixin-js-sdk'
 import { mapGetters } from 'vuex'
 import api from '../api/Api'
@@ -48,10 +48,9 @@ export default {
     }
     else {
       this.scanAddBook();//扫码并添加购物车
-      // this.scanBook().then(res=>{
-      //   this.addBookCart(res.split(',')[1]);
-      // });
     }
+
+    this.messageBox();
 
   },
   
@@ -73,6 +72,7 @@ export default {
    
   },
   methods: {
+    
     back(){
       this.$router.go(-1)
     },
@@ -93,7 +93,7 @@ export default {
       api.cart.addBook(isbn).then(res => {
         Indicator.close();//关闭页面提示圈
         if(res.success == true){
-          alert("添加成功");
+          this.messageBox();//提示是否继续扫码
         } else{
           alert(res.msg);
         }
@@ -143,7 +143,7 @@ export default {
               reject(err)
               console.log(err)
             })
-      }else {
+       }else {
         
             this.openBarcode().then(res=>{
                 resolve(res)
@@ -152,7 +152,26 @@ export default {
               })
         }
        })
+      },
+      //添加成功后的提示
+      messageBox(){
+        MessageBox({
+          title: '添加成功',
+          message: '是否继续扫码?',
+          showCancelButton: true,//显示取消按钮
+          confirmButtonText:"在扫一本",
+          cancelButtonText:"去购物车"
+        }).then(action =>{
+          if (action == "confirm") {
+            this.scanAddBook();//继续扫码并添加购物车
+          } else if (action == "cancel") {
+            this.$router.push({ 
+              name: 'Cart', 
+            });
+          }
+        });
       }
+      
   }
 
 }

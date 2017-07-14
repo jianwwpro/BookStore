@@ -10,6 +10,7 @@
     <mt-button type="primary" size="large" @click='login'>登录</mt-button>
     <router-link to="/ForgetPassword" >忘记密码?</router-link>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
     <router-link to="/Regist" >没有账号?注册一个</router-link>
+    
     <mt-button type="primary" size="large" @click='wx_login'>微信登录</mt-button>
    
   </div>
@@ -31,7 +32,7 @@
         this.$router.go(-1)
       },
       wx_login(){
-        window.location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid='+wxAppid+'&redirect_uri=http%3a%2f%2f'+redirectUri+'%2f#%2fLoginByWx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
+        window.location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid='+wxAppid+'&redirect_uri=http%3a%2f%2f'+redirectUri+'%2f%23%2fLoginByWx&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
       },
       login(){
          Indicator.open({
