@@ -90,22 +90,33 @@ export default {
 
     },
     openLocation(){
+
+      return new Promise((resolve,reject)=>{
         if(this.config==null){
-          //console.log('wx config is null')
-          Indicator.open({
-            text: '加载中...',
-            spinnerType: 'fading-circle'
-          });
-          this.$store.dispatch('save').then(res=>{
-              Indicator.close()
-              return this.getLocation();
-            },err=>{
-              console.log(err)
-            })
-      }else {
+            Indicator.open({
+              text: '加载中...',
+              spinnerType: 'fading-circle'
+            });
+            this.$store.dispatch('save').then(res=>{
+                Indicator.close()
+                this.getLocation().then(res=>{
+                  resolve(res)
+                },er=>{
+                  reject(er)
+                })
+              },err=>{
+                console.log(err)
+              })
+        }else {
+          
+            this.getLocation().then(res=>{
+                  resolve(res)
+                },er=>{
+                  reject(er)
+                })
+          }
+      })
         
-          return this.getLocation()
-        }
         //正式环境请注释
         //return new Promise((resolve,reject)=>{})
      
@@ -123,7 +134,6 @@ export default {
           }
         
 
-      console.log(this.storeList)
       },error=>{
 
       })
@@ -144,9 +154,9 @@ export default {
     }
   },
   mounted(){
-    
+    //this.openLocation()
     this.openLocation().then(res=>{
-      alert(JSON.stringfy(res))
+      
       this.getList(this.page,this.rows,res);
       //console.log("经纬度信息"+res)
     },error=>{
