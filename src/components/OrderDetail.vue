@@ -5,20 +5,32 @@
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
-
-    <canvas id="barcode"></canvas>
-    <canvas id="qrCode"></canvas>
-    <div> ------已选择({{bookList.length}})本----------------------</div> 
-
-    <li v-for='book in bookList'>
-      <ul>
-        <li>{{book.bookName}}</li>
-        <a>{{book.caiBook.author}}</a><a>/{{book.pressName}}</a><a>/{{book.caiBook.publishYear}}</a>
-        <div>定价{{book.singleFixprice}}元</div>
-        <div>ISBN{{book.isbn}}</div>
-      </ul>
-    </li>
-
+    
+  
+    <canvas class='barcode' id="barcode"></canvas>
+    <canvas class="qrCode" id="qrCode"></canvas>
+    <hr>
+    <div class='title'>
+      <span class='p1'></span> 
+      <span class='p2'>已选择({{bookList.length}})</span>
+    </div> 
+    
+    <ol>
+      <li v-for='book in bookList' class='clearfix'>
+          <div class='clearfix'></div>
+          <div class='bookName clearfix'>
+            <p>《{{book.bookName}}》</p>
+            <a >删除</a>
+          </div>
+          <div class='bookInfo clearfix'>
+            <p class='author'>{{book.caiBook.author}}</p>
+            <p class='press'>/{{book.pressName}}</p>
+            <p class='pub'>/{{book.caiBook.publishYear}}</p>
+          </div>
+          <p class='price'>定价{{book.singleFixprice}}元</p>
+          <p class='isbn'>ISBN{{book.isbn}}</p>
+      </li>
+    </ol>
   </div>
 </template>
 <script>
@@ -94,6 +106,17 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang='stylus'>
+
+.clearfix:after {
+  content: " ";
+  display: block;
+  clear: both;
+  height: 0;
+}
+.clearfix {
+  zoom: 1;
+}
+
 .cart
   width 100%
   float left
@@ -148,4 +171,52 @@ export default {
       background-color red
       color #fff
       width 100%
+  .barcode
+    margin 0 auto
+    display block
+  .qrCode
+    margin 0 auto
+    display block
+
+  hr
+    height 20px
+    border 0 
+    background-color #fcf7eb
+  .title
+    font-color #666666
+    margin-top 30px
+    .p1
+      width 10px
+      height 20px
+      background #ffb310
+      display block
+      float left
+      margin-top 2px
+    .p2
+      margin-left 10px
+  ol
+    li
+      margin-top 17px
+      margin-left 20px
+      .bookName
+        p
+          color #666666
+          float left
+          font-weight bold
+        a
+          color red
+          display block
+          float right
+      .bookInfo
+        margin-top 5px
+        color #7a7a7a
+        p
+          float left
+      .price
+        margin-top 5px
+        color #7a7a7a
+      .isbn
+        margin-top 5px
+        color #7a7a7a
+
 </style>

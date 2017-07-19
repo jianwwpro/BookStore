@@ -14,7 +14,7 @@
         </li>
        <li @click="scanAddBook()">
           <img src="../assets/QRcode.png" alt="">
-          <a>在扫一本</a>
+          <a>再扫一本</a>
        </li>
        <li>
          <router-link class="link" to="/Cart">
@@ -159,7 +159,7 @@ export default {
           title: '添加成功',
           message: '是否继续扫码?',
           showCancelButton: true,//显示取消按钮
-          confirmButtonText:"在扫一本",
+          confirmButtonText:"再扫一本",
           cancelButtonText:"去购物车"
         }).then(action =>{
           if (action == "confirm") {
