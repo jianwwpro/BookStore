@@ -20,15 +20,15 @@
           <div class='clearfix'></div>
           <div class='bookName clearfix'>
             <p>《{{book.bookName}}》</p>
-            <a >删除</a>
+            <!-- <a >删除</a> -->
           </div>
           <div class='bookInfo clearfix'>
             <p class='author'>{{book.caiBook.author}}</p>
             <p class='press'>/{{book.pressName}}</p>
             <p class='pub'>/{{book.caiBook.publishYear}}</p>
           </div>
-          <p class='price'>定价{{book.singleFixprice}}元</p>
-          <p class='isbn'>ISBN{{book.isbn}}</p>
+          <p class='price'>定价：{{book.singleFixprice}}元</p>
+          <p class='isbn'>ISBN：{{book.isbn}}</p>
       </li>
     </ol>
   </div>
@@ -126,51 +126,6 @@ export default {
      background: -moz-linear-gradient(right,#00774e 0,#00d994 100%);
      background: -o-linear-gradient(right,#00774e 0,#00d994 100%);
      background: linear-gradient(to right,#00774e 0,#00d994 100%); 
-  .book_list
-    float left
-    width 100%
-    li
-      position relative
-      height 5em
-      padding 1em 0
-      background-color #eee
-      margin-bottom 1em
-      input
-        position absolute
-        top 40%
-      img
-        margin-left 2em
-        height 100%
-        max-width 5em
-    .details
-      width 70%
-      display inline-block
-      float right
-      list-style none
-      li
-        height 1.1em
-        margin-bottom 0.3em
-        font-size 0.2em
-        border-bottom none
-        padding 0
-      .book_name
-        font-size 1em
-      .delete
-        position absolute
-        color red
-        right 1em
-        top 40%
-  .button
-    position fixed
-    bottom  0
-    left 0
-    text-align center
-    width 100%
-    border-top 1px solid #ddd
-    .mint-button
-      background-color red
-      color #fff
-      width 100%
   .barcode
     margin 0 auto
     display block
@@ -207,6 +162,7 @@ export default {
           color red
           display block
           float right
+          margin-right 10px
       .bookInfo
         margin-top 5px
         color #7a7a7a
