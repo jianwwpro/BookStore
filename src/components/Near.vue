@@ -12,7 +12,7 @@
       <li v-for='store in storeList.rows'>
         <img src='../assets/王府井书店.png' alt="">
         <ul>
-          <li class="store_name">{{store.name}}<span class="allow_buy" v-if="store.status==0">(可以购书)</span><span class="refuse_buy" v-if="store.status==1">(暂停采购)</span></li>
+          <li class="store_name">{{store.name}}<span class="allow_buy" v-if="store.status==1">(可以购书)</span><span class="refuse_buy" v-if="store.status==0">(暂停采购)</span></li>
           <li class="store_place">{{store.address}}</li>
           <li class="open_time">营业时间：<span>{{store.begTimeStr}}~{{store.endTimeStr}}</span></li>
           <li class="go_there"><a href="">到这去</a></li>
