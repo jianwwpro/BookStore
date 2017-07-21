@@ -8,23 +8,19 @@
         </router-link>
       </mt-header>
      <ul>
-       <li>
-         <router-link class='link' to="/Scan">
+       <li @click='go("Scan")'>
+         
             <img src="../assets/QRcode.png" alt="">
             扫码购书
-         </router-link>
+         
        </li>
-       <li>
-          <router-link class="link" to="/Near">
+       <li @click='go("Near")'>
             <img src="../assets/patener.png" alt="">
             合作书店
-         </router-link>
         </li>
-       <li>
-         <router-link class="link" to="/Bought">
+       <li @click='go("Bought")'>
             <img src="../assets/buied.png" alt="">
             已购图书
-         </router-link>
        </li>
      </ul>
      <div class="text_content">
@@ -75,6 +71,11 @@ export default {
   methods: {
     back(){
       this.$router.go(-1)
+    },
+    go(name){
+      this.$router.push({
+                      name: name
+                    })
     },
     logout(){
          Indicator.open({
@@ -142,6 +143,7 @@ export default {
       width 25%
       margin-right 1em
       text-align center
+      color #707070
       img
         width 100%
   .mint-header
