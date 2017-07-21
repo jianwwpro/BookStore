@@ -58,7 +58,7 @@ export default {
       },
       allLoaded:false,
       page: 1,
-      rows: 1,
+      rows: 10,
     }
   },
   route: {
