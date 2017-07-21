@@ -45,7 +45,8 @@ export default {
     return {
       msg: '购物车',
       orderNum: this.$route.params.orderNum,//传过来的订单编号
-      bookList: []
+      bookList: [],
+      orderStatus: ''//订单支付状态
     }
   },
   // 钩子函数,data加载过后加载
@@ -75,7 +76,21 @@ export default {
     ),
     //查询订单详情
     this.orderDetail(this.orderNum)
-    // console.log(this.orderNum);
+
+    //定时查询当前订单结算状态
+    var interval = setInterval(() => { 
+      this.orderDetail(this.orderNum);
+
+      if (this.orderStatus == 1) {
+        clearInterval(interval);// 停止定时刷新
+
+        // 支付成功,去成功页面
+        this.$router.push({ 
+          name: 'OrderDetailStatus'
+        })
+      }
+
+    }, 3000)
   },
   components: {
 
@@ -90,6 +105,7 @@ export default {
       api.order.orderDetail(orderNum).then(res => {
         if(res.success === true){
           this.bookList = res.bookList;
+          this.orderStatus = res.orderStatus;
           console.log(res.bookList);
         } else{
           alert(res.msg);
@@ -98,7 +114,6 @@ export default {
           console.log(err);
       })
     }
-
   }
 
 }

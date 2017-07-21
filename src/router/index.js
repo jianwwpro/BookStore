@@ -7,6 +7,7 @@ import Bought from '@/components/Bought'
 import Login from '@/components/Login'
 import Scan from '@/components/Scan'
 import OrderDetail from '@/components/OrderDetail'
+import OrderDetailStatus from '@/components/OrderDetailStatus'
 import MyOrder from '@/components/MyOrder'
 import TiedCard from '@/components/TiedCard'
 import LoginByWx from '@/components/LoginByWx'
@@ -90,6 +91,12 @@ let router = new Router({
       name: 'OrderDetail',
       component: OrderDetail,
       meta: { requiresAuth: true }
+    }, 
+    // 订单状态
+    {
+      path: '/OrderDetailStatus',
+      name: 'OrderDetailStatus',
+      component: OrderDetailStatus
     }, 
     // 绑卡页面
     {
