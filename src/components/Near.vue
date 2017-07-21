@@ -15,7 +15,7 @@
           <li class="store_name">{{store.name}}<span class="allow_buy" v-if="store.status==1">(可以购书)</span><span class="refuse_buy" v-if="store.status==0">(暂停采购)</span></li>
           <li class="store_place">{{store.address}}</li>
           <li class="open_time">营业时间：<span>{{store.begTimeStr}}~{{store.endTimeStr}}</span></li>
-          <li class="go_there"><a href="">到这去</a></li>
+          <li class="go_there"><a  @click='goThere(store)' >到这去</a></li>
           <li class="distance"><span>{{store.distence}}</span>km</li>
         </ul>
       </li>
@@ -73,6 +73,22 @@ export default {
     back(){
       this.$router.go(-1)
     },
+
+    goThere(store){
+      let lngLat = (store.lng_lat+"").split(',');
+      
+        wx.openLocation({
+          latitude: parseFloat(lngLat[1]), // 纬度，浮点数，范围为90 ~ -90
+          longitude: parseFloat(lngLat[0]), // 经度，浮点数，范围为180 ~ -180。
+          name: store.name, // 位置名
+          address: store.address, // 地址详情说明
+          scale: 15, // 地图缩放级别,整形值,范围从1~28。默认为最大
+          infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
+      })
+
+      
+    },
+
     getLocation(){
       return new Promise((resolve,reject)=>{
        wx.config(this.config)
@@ -154,6 +170,7 @@ export default {
     }
   },
   mounted(){
+    //this.getList(this.page,this.rows,{longitude:120,latitude:50});
     //this.openLocation()
     this.openLocation().then(res=>{
       
@@ -215,6 +232,7 @@ export default {
           text-align right
         .go_there
           top 25%
+          font-size 0.6em
           a
             color #fff
             background-color #27b5ff
@@ -222,6 +240,12 @@ export default {
             border-radius 5px
         .distance
           top 60%
+          font-size 0.6em
           padding-right 0.5em
+
+        .store_place
+          font-size 0.7em
+        .open_time
+          font-size 0.7em
     
 </style>
