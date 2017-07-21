@@ -50,8 +50,6 @@ export default {
       this.scanAddBook();//扫码并添加购物车
     }
 
-    this.messageBox();
-
   },
   
   data () {//controller 数据request.setAttrbute('msg','彩云书店');request.setAttrbute('msg','彩云书店')
