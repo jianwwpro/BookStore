@@ -75,7 +75,7 @@ export default {
     },
 
     goThere(store){
-      let lngLat = (store.lng_lat+"").split(',');
+      let lngLat = (store.txlng_lat+"").split(',');
       
         wx.openLocation({
           latitude: parseFloat(lngLat[1]), // 纬度，浮点数，范围为90 ~ -90
@@ -170,7 +170,7 @@ export default {
     }
   },
   mounted(){
-    //this.getList(this.page,this.rows,{longitude:120,latitude:50});
+    this.getList(this.page,this.rows,{longitude:120,latitude:50});
     //this.openLocation()
     this.openLocation().then(res=>{
       
