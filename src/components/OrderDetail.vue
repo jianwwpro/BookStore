@@ -46,7 +46,8 @@ export default {
       msg: '购物车',
       orderNum: this.$route.params.orderNum,//传过来的订单编号
       bookList: [],
-      orderStatus: ''//订单支付状态
+      orderStatus: '',//订单支付状态
+      interval: ''// 定时刷新Key
     }
   },
   // 钩子函数,data加载过后加载
@@ -78,11 +79,11 @@ export default {
     this.orderDetail(this.orderNum)
 
     //定时查询当前订单结算状态
-    var interval = setInterval(() => { 
+    this.interval = setInterval(() => { 
       this.orderDetail(this.orderNum);
-
+      console.log(1);
       if (this.orderStatus == 1) {
-        clearInterval(interval);// 停止定时刷新
+        this.stopInterval();// 停止定时刷新
 
         // 支付成功,去成功页面
         this.$router.push({ 
@@ -92,13 +93,25 @@ export default {
 
     }, 3000)
   },
+  // 实例销毁之前调用
+  beforeDestroy(){
+    this.stopInterval();
+  },
   components: {
 
+  },
+  // 如果路由有变化，执行该方法
+  watch: {
+    "$route": "stopInterval" // 停止定时刷新
   },
   // 方法
   methods: {
     back(){
       this.$router.go(-1)
+    },
+    // 停止定时刷新
+    stopInterval(){
+      clearInterval(this.interval);
     },
     // 取订单详情
     orderDetail(orderNum){

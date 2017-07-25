@@ -66,18 +66,23 @@ export default {
     // 购物车提交订单
     submitCart(){
       //获取购物车里勾选的图书
-      var selectedBookList = [];
-      this.bookList.rows.map(({ booksId, checked }) => {
+      // var selectedBookList = [];
+      // this.bookList.rows.map(({ booksId, checked }) => {
+      //   if(checked != null && checked){
+      //     selectedBookList.push(booksId);
+      //   }
+      // })
+
+      //获取购物车里勾选的Id
+      var selectedCartId = [];
+      this.bookList.rows.map(({ id, checked }) => {
         if(checked != null && checked){
-          selectedBookList.push(booksId);
+          selectedCartId.push(id);
         }
       })
-
       // 提交图书
-      api.cart.submitCart(selectedBookList).then(res => {
+      api.cart.submitCart(selectedCartId).then(res => {
         if(res.success === true){
-          // console.log(res.orderNum);
-          // console.log(res.orderDetail);
           this.$router.push({ 
             name: 'OrderDetail', 
             params: { 
