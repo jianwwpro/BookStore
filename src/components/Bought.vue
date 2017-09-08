@@ -8,7 +8,9 @@
     <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
       <ul class="book_list" v-for='book in bookList.rows'>
         <li>
-          <img src="../assets/book_face.png" alt="">
+          <!-- <img src="../assets/book_face.png" alt=""> -->
+          <img v-if="book.caiBook.urgent=='1'" :src="'http://img13.360buyimg.com/n1/'+book.caiBook.coverPath">
+          <img v-else :src="'../assets/book_face.png'">
           <ul class="details">
             <li class="book_name"><b>《{{book.bookName}}》</b></li>
             <li class="book_author"><span>{{book.caiBook.author}}</span>/<span>{{book.pressName}}</span>/<span>{{book.caiBook.publishYear}}</span></li>

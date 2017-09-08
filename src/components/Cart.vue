@@ -11,7 +11,9 @@
       <ul class="book_list">
         <li v-for='book in bookList.rows'>
           <input type="checkbox" v-bind:value="book.caiBook.id" v-model="book.checked">
-          <img src="../assets/book_face.png" alt="">
+          <!-- <img src="../assets/book_face.png" alt=""> -->
+          <img v-if="book.caiBook.urgent=='1'" :src="'http://img13.360buyimg.com/n1/'+book.caiBook.coverPath">
+          <img v-else :src="'../assets/book_face.png'">
           <ul class="details">
             <li class="book_name"><b>《{{book.caiBook.name}}》</b></li>
             <li class="book_author"><span>{{book.caiBook.author}}</span>/<span>{{book.caiBook.press}}</span>/<span>{{book.caiBook.publishYear}}</span></li>
@@ -49,6 +51,7 @@ export default {
       allLoaded:false,
       page: 1,
       rows: 10,
+      API_URL: api.API_URL,
     }
   },
   route: {
