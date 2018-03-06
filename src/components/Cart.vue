@@ -11,7 +11,7 @@
       <ul class="book_list">
         <li v-for='book in bookList.rows'>
           <input type="checkbox" v-bind:value="book.caiBook.id" v-model="book.checked">
-          <img src="../assets/book_face.png" alt="">
+           <img v-bind:src="book.caiBook.coverPath">
           <ul class="details">
             <li class="book_name"><b>《{{book.caiBook.name}}》</b></li>
             <li class="book_author"><span>{{book.caiBook.author}}</span>/<span>{{book.caiBook.press}}</span>/<span>{{book.caiBook.publishYear}}</span></li>

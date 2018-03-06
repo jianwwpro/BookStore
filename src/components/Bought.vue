@@ -8,7 +8,7 @@
     <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
       <ul class="book_list" v-for='book in bookList.rows'>
         <li>
-          <img src="../assets/book_face.png" alt="">
+          <img v-bind:src="book.coverPath">
           <ul class="details">
             <li class="book_name"><b>《{{book.bookName}}》</b></li>
             <li class="book_author"><span>{{book.caiBook.author}}</span>/<span>{{book.pressName}}</span>/<span>{{book.caiBook.publishYear}}</span></li>
